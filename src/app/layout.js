@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-      <nav className="absolute top-0 left-0 flex items-center bg-opacity-30 p-4">
+      <nav className="fixed top-0 left-0 flex items-center bg-opacity-30 p-4">
           <Link href="/"className="text-2xl font-semibold text-white-500 ml-8 hover:text-gray-600">AniWrapped</Link>
         </nav>
         {children}
