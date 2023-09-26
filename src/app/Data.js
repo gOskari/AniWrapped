@@ -49,7 +49,15 @@ async function DataPiece({profile_name}) {
           return userData2;
       } catch (error) {
           console.error('GraphQL Error:', error.response.errors);
-          return;
+          const userData2 = {
+            name: 'userData.User.name',
+            avatar: 'https://picsum.photos/200',
+            statistics: {
+                count: '100',
+                minutesWatched: '100'
+            }
+          }
+          return userData2;
       }
     }
 
@@ -70,7 +78,7 @@ async function DataPiece({profile_name}) {
   }
 }
 
-export default function Data({profile_name}) {
+export default async function Data({profile_name}) {
     return (
         <section>
         <DataPiece profile_name={profile_name} />

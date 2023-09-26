@@ -1,30 +1,38 @@
-'use client'
-import Slider from "react-slick";
-import React from 'react'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+'use client';
 
-export default function Carousel() {
-    const settings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      };
+import { Carousel } from 'flowbite-react';
+//import Data from './Data.js'
 
-    return (
-      <div>
-        <Slider {...settings}>
-          <div>
-            <h3>Item 1</h3>
-          </div>
-          <div> 
-            <h3>Item 2</h3>
-          </div>
-          <div>
-            <h3>Item 3</h3>
-          </div>
-        </Slider>
-      </div>
-    );
+export default function PauseOnHovering(name) {
+  console.log('Tää on se:', name['name']);
+  return (
+    <Carousel pauseOnHover className="h-5/6 w-5/6">
+      <img
+        alt="..."
+        src="https://picsum.photos/200"
+      />
+      <img
+        alt="..."
+        src="https://picsum.photos/200"
+      />
+      <img
+        alt="..."
+        src="https://i.pinimg.com/originals/0e/50/39/0e503918829c61bd24803ce064546cee.jpg"
+      />
+      <img
+        alt="..."
+        src="https://flowbite.com/docs/images/carousel/carousel-4.svg"
+      />
+      <img
+        alt="..."
+        src="https://flowbite.com/docs/images/carousel/carousel-5.svg"
+      />
+      {/*
+      <p>
+        <Data profile_name={name['name']}/>
+      </p>
+  */}
+    </Carousel>
+  )
 }
+
