@@ -8,7 +8,7 @@ export default async function Page({ params }) {
   const data = await FetchUserData(params.name);
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center">
       <DataCarousel data={data}/>
     </div>
   );
