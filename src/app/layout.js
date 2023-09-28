@@ -14,10 +14,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar/>
+      <Navbar/>
         {children}
         <footer class="border-t border-gray-300 bg-transparent">
-        <div className="container mx-auto text-center">
+          <div className="container mx-auto text-center">
             <div className="mb-4">
               <a href="https://github.com/gOskari" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700">
                 <i className="fab fa-github"></i> GitHub
