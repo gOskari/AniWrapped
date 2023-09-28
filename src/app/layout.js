@@ -14,14 +14,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <header>
-          <nav className="fixed top-0 left-0 flex items-center bg-opacity-30 p-4 z-50">
-            <Link href="/"className="text-2xl font-semibold text-white-500 ml-8 hover:text-gray-600">AniWrapped</Link>
+          <nav className="fixed top-0 left-0 flex items-center p-4 z-50">
+            <Link href="/"className="text-2xl font-semibold text-white ml-8 hover:text-gray-600">AniWrapped</Link>
           </nav>
         </header>
-        <main className='w-screen h-screen'>
+        <main>
           {children}
         </main>
-        <footer class="border-t border-gray-300 bg-transparent">
+        <footer class="border-t border-white/20 bg-transparent">
           <div className="container mx-auto text-center">
             <div className="mb-4">
               <a href="https://github.com/gOskari" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700">
