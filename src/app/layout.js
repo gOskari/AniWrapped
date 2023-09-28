@@ -1,6 +1,8 @@
+import Navbar from './NavigationBar'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,9 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <header>
-          <nav className="fixed top-0 left-0 flex items-center p-4 z-50">
-            <Link href="/"className="text-2xl font-semibold text-white ml-8 hover:text-gray-600">AniWrapped</Link>
-          </nav>
+        <Navbar/>
         </header>
         <main>
           {children}
