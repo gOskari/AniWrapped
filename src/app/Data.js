@@ -1,4 +1,5 @@
 'use client';
+import Image from "next/image";
 
 //import { Avatar } from 'flowbite-react';
 
@@ -6,12 +7,12 @@ function DataPiece({data}) {
   try {
     data = data.data;
     return (
-      <div className="w-full h-full flex items-center justify-center p-10">
+      <div className="w-full h-screen flex items-center justify-center p-10">
         <div className="grid grid-cols-2 grid-rows-2 gap-10 justify-center items-center w-full h-full rounded-xl">
-          <div className="h-full flex justify-center items-center backdrop-blur-sm bg-white/10 rounded-xl">
+          <div className="h-full flex justify-center items-center backdrop-blur-sm bg-white/10 rounded-xl h-1/4">
             {//<Avatar img={data.avatar} size=""/>
             }
-            <img src={data.avatar} className="object-cover w-full h-full rounded-xl"></img>
+            <Image src={data.avatar} alt="User Avatar" height="500" width="500" className="object-contain w-full h-full rounded-xl"/>
           </div>
           <div className="h-full backdrop-blur-sm bg-white/10 row-start-2 flex items-center justify-center rounded-xl">
             <h1>{data.name}</h1>
