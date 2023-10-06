@@ -1,6 +1,7 @@
 import { request, gql } from "graphql-request";
+import prisma from "../../../lib/prisma";
 
-const getComparisonData = async (page, perPage) => {
+const fillDb = async (page, perPage) => {
   const endpoint = "https://graphql.anilist.co";
 
   const query = gql`
@@ -35,25 +36,32 @@ const getComparisonData = async (page, perPage) => {
       page: page,
       perPage: perPage,
     });
-    const userData = response;
 
-    /*
-        const userData2 = {
-            name: userData.User.name,
-            avatar: userData.User.avatar.large,
-            statistics: {
-                count: userData.User.statistics.anime.count,
-                minutesWatched: userData.User.statistics.anime.minutesWatched
-            }
-        }
-        */
+    console.log("response: ", response.Page.users);
+
+    for (const user in response.Page.users) {
+      if (1 === 1) {
+        (async () => {
+          console.log(await createUser(user.id, user.name, user.updateAt));
+          //console.log(await createUser(10, 'user', String(new Date()), 23498, 1.5));
+        })();
+      } else {
+        console.log("User exists.");
+      }
+    }
+
     console.log("Query done.");
+    /*
+    (async () => {
+        console.log(await getUsers())
+      })()
+      */
     return response;
   } catch (error) {
     console.error("GraphQL Error:", error);
     return "Error", error;
   }
-}
+};
 
 const findPositionBinary = (data, num) => {
   console.log(data.Page.users);
@@ -80,6 +88,39 @@ const findPositionBinary = (data, num) => {
   }
 
   return low;
-}
+};
 
-export { getComparisonData, findPositionBinary };
+const getUsers = async () => {
+  const users = await prisma.user.findMany();
+  return users;
+};
+
+const createUser = async (
+  id,
+  name,
+  updatedAt,
+  anime_minutesWatched,
+  standardDeviation
+) => {
+  console.log(new Date());
+  const user = await prisma.user.create({
+    data: {
+      name: name || "user",
+      updatedAt: updatedAt || new Date(),
+      anime_minutesWatched: anime_minutesWatched || 123,
+      standardDeviation: standardDeviation || 1.0,
+    },
+  });
+  return user;
+};
+
+const getUser = async (id) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  return user;
+};
+
+export { fillDb, findPositionBinary, getUsers, createUser };
