@@ -6,6 +6,9 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 136, 19, 55;
   --background-end-rgb: 30, 27, 75;
+  --primary-color: #D7C49E;
+  --secondary-color: #343148;
+  --secondary-color-dark: #5c5a6c;
 }
 
 /*

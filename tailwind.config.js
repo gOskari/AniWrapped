@@ -13,7 +13,17 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        "primary-color": "var(--primary-color)",
+        "secondary-color": "var(--secondary-color)",
+        "secondary-color-dark": "var(--secondary-color-dark)"
+      }
     },
+  },
+  variants: {
+    extend: {
+      backgroundColor: ['hover', 'focus'],
+    }
   },
   plugins: [require('flowbite/plugin')],
 }
