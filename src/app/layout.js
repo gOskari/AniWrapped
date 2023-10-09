@@ -1,4 +1,5 @@
 import Navbar from "./NavigationBar";
+import Footer from "./Footer"
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Link from "next/link";
@@ -19,23 +20,7 @@ export default function RootLayout({ children }) {
         </header>
         <main>{children}</main>
         <footer class="border-t border-white/20 bg-transparent">
-          <div className="container mx-auto text-center">
-            <div className="mb-4">
-              <a
-                href="https://github.com/gOskari"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-color hover:text-gray-700"
-              >
-                <i className="fab fa-github"></i> GitHub
-              </a>
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">
-                Copyright &copy; 2023 AniWrapped. All rights reserved.
-              </p>
-            </div>
-          </div>
+          <Footer />
         </footer>
       </body>
     </html>
