@@ -8,21 +8,19 @@ function DataPiece({data}) {
     data = data.data;
     return (
       <div className="w-full h-screen flex items-center justify-center p-10">
-        <div className="grid grid-cols-2 grid-rows-2 gap-10 justify-center items-center w-full h-full rounded-xl">
-          <div className="h-full flex justify-center items-center backdrop-blur-sm bg-white/10 rounded-xl h-1/4">
-            {//<Avatar img={data.avatar} size=""/>
-            }
-            <Image src={data.avatar} alt="User Avatar" height="500" width="500" className="object-contain w-full h-full rounded-xl"/>
+        <div className="grid grid-cols-2 grid-rows-2 gap-10 justify-center items-center w-3/4 h-3/4">
+          <div className="h-full flex justify-center items-center backdrop-blur-sm bg-white/10">
+          <h1>{data.name}</h1>
           </div>
-          <div className="h-full backdrop-blur-sm bg-white/10 row-start-2 flex items-center justify-center rounded-xl">
-            <h1>{data.name}</h1>
+          <div className="h-full backdrop-blur-sm bg-white/10 row-start-2 flex items-center justify-center flex-row col-span-2">
+          <p>Anime watched: {data.statistics.count}</p>
+          <p>Hours watched: {Math.round((data).statistics.minutesWatched/60, 2)}</p>
           </div>
-          <div className="h-full backdrop-blur-sm bg-white/10 flex items-center justify-center flex-col row-span-2 rounded-xl">
-            <p>Anime watched: {data.statistics.count}</p>
-            <p>Hours watched: {Math.round((data).statistics.minutesWatched/60, 2)}</p>
+          <div className="h-full backdrop-blur-sm bg-white/10 flex items-center justify-center flex-col">
+          <Image src={data.avatar} alt="User Avatar" height="500" width="500" className="object-contain w-full h-full"/>
           </div>
         </div>
-      </div>
+      </div>            
     );
 
   } catch (error) {
