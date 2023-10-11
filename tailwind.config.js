@@ -16,7 +16,8 @@ module.exports = {
       colors: {
         "primary-color": "var(--primary-color)",
         "secondary-color": "var(--secondary-color)",
-        "secondary-color-dark": "var(--secondary-color-dark)"
+        "secondary-color-dark": "var(--secondary-color-dark)",
+        "bg-color": "var(--bg-color)"
       }
     },
   },
