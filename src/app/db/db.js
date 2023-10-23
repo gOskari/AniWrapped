@@ -1,7 +1,7 @@
 import { request, gql } from "graphql-request";
 import prisma from "../../../lib/prisma";
 
-const fillDb = async (page, perPage) => {
+const getAnilistData = async (page, perPage) => {
   const endpoint = "https://graphql.anilist.co";
 
   const query = gql`
@@ -21,7 +21,7 @@ const fillDb = async (page, perPage) => {
           updatedAt
           statistics {
             anime {
-              count
+              count 
               minutesWatched
               standardDeviation
             }
@@ -38,25 +38,26 @@ const fillDb = async (page, perPage) => {
     });
 
     console.log("response: ", response.Page.users);
+    return response;
+  } catch (error) {
+    console.log("Anilist query error:", error);
+    return error;
+  }
+};
+
+const fillDb = async (page, perPage) => {
+  try {
+    const response = await getAnilistData(page, perPage);
 
     for (const user in response.Page.users) {
-      if (1 === 1) {
+      try {
         (async () => {
           console.log(await createUser(user.id, user.name, user.updateAt));
-          //console.log(await createUser(10, 'user', String(new Date()), 23498, 1.5));
-        })();
-      } else {
-        console.log("User exists.");
+        });
+      } catch (e) {
+        console.log("filldb error:", e);
       }
     }
-
-    console.log("Query done.");
-    /*
-    (async () => {
-        console.log(await getUsers())
-      })()
-      */
-    return response;
   } catch (error) {
     console.error("GraphQL Error:", error);
     return "Error", error;
