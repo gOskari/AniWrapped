@@ -1,15 +1,20 @@
-import { redirect } from 'next/navigation'
+'use client'
+import { useRouter } from 'next/navigation'
+import {useState} from 'react'
 
 
 export default function NameForm() {
-  async function handleName(stuff) {
-    'use server'
-    redirect(`/profile/${stuff.get('name')}`); // Navigate to new route
+  const router = useRouter()
+  const [route, setRoute] = useState()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    router.push("profile/" + route)
   }
 
   return(
     <div>
-      <form action={handleName}>
+      <form>
         <label for="name" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Name:</label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -20,6 +25,11 @@ export default function NameForm() {
           <input type="text" id="name" name="name" className="block w-full h-12 p-4 pl-10 text-lg text-secondary-color border border-secondary-color rounded-lg bg-primary-color" placeholder="Anilist Username" />
           <button type="submit" className="text-primary-color absolute top-1/2 transform -translate-y-1/2 right-2.5 bg-secondary-color hover:bg-secondary-color-dark focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
         </div>
+      </form>
+
+      <form onSubmit={handleSubmit}>
+        <input type="text" name='route' onChange={(e)=>{setRoute(e.target.value)}} />
+        <button type="submit">Submit</button>
       </form>
     </div>
   )

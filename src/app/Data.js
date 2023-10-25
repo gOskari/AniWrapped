@@ -8,30 +8,6 @@ function DataPiece({ data }) {
     data = data.data;
     return (
       <div className="w-full h-screen flex items-center justify-center p-10">
-<<<<<<< HEAD
-        <div className="grid grid-cols-2 grid-rows-2 gap-10 justify-center items-center w-full h-full">
-          <div className="h-full flex justify-center items-center backdrop-blur-sm bg-white/10 ">
-            {
-              //<Avatar img={data.avatar} size=""/>
-            }
-            <Image
-              src={data.avatar}
-              alt="User Avatar"
-              height="500"
-              width="500"
-              className="object w-full h-full"
-            />
-          </div>
-          <div className="h-full backdrop-blur-sm bg-white/10 row-start-2 flex items-center justify-center">
-            <h1>{data.name}</h1>
-          </div>
-          <div className="h-full backdrop-blur-sm bg-white/10 flex items-center justify-center flex-col">
-            <p>Anime watched: {data.statistics.count}</p>
-            <p>
-              Hours watched:{" "}
-              {Math.round(data.statistics.minutesWatched / 60, 2)}
-            </p>
-=======
         <div className="grid grid-cols-2 grid-rows-2 gap-10 justify-center items-center w-3/4 h-3/4">
           <div className="h-full flex justify-center items-center flex-col backdrop-blur-sm bg-white/10">
           <h1 className="text-3xl">Anilist User:</h1>
@@ -43,7 +19,6 @@ function DataPiece({ data }) {
           </div>
           <div className="h-full backdrop-blur-sm flex items-center justify-center flex-col">
           <Image src={data.avatar} alt="User Avatar" height="500" width="500" className="object-none w-full h-full"/>
->>>>>>> c6b5053dfabab2de8c6c18f18499a96936079b65
           </div>
         </div>
       </div>            
