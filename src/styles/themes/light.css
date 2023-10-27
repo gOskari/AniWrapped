@@ -1,0 +1,6 @@
+html[data-theme="light"] {
+    --bg-color: #EDF1F5;
+    --primary-color: #FAFAFA;
+    --secondary-color: #63788F;
+    --secondary-color-dark: #8BD1F5;
+}

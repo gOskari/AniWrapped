@@ -1,13 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
-:root {
-  --bg-color: #BC986A;
-  --primary-color: #D7C49E;
-  --secondary-color: #343148;
-  --secondary-color-dark: #5c5a6c;
-}
 
 /*
 @media (prefers-color-scheme: dark) {
@@ -19,10 +12,13 @@
 }
 */
 
-body {
-  background: #BC986A;
-}
-
-.shadow-text {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+@layer base {
+  html {
+    --bg-color: #bc986a;
+    --primary-color: #d7c49e;
+    --secondary-color: #343148;
+    --secondary-color-dark: #5c5a6c;
+  }
+  @import "themes/dark.css";
+  @import "themes/light.css";
 }
