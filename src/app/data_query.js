@@ -1,12 +1,31 @@
 import { request, gql } from 'graphql-request';
+import { SaveUserData } from '../app/db/db';
 
+let cache = {};
+const cacheDuration = 24 * 60 * 60 * 1000;  // 1 day
 
 async function FetchUserData(name) {
+    const cacheKey = name;
+    const currentTime = Date.now();
+
+    // Clear expired cache entries
+    Object.keys(cache).forEach(key => {
+        if (currentTime - cache[key].timestamp > cacheDuration) {
+            delete cache[key];
+        }
+    });
+
+    // If data is in cache, return it
+    if (cache[cacheKey]) {
+        console.log('Returning data from cache.');
+        return cache[cacheKey].data;
+    }
+
     const endpoint = 'https://graphql.anilist.co';
 
     const GET_USER = gql`
-    query ($id: Int, $name: String) { # Define which variables will be used in the query (id)
-        User (id: $id, name: $name) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
+    query ($id: Int, $name: String) {
+        User (id: $id, name: $name) {
           id
           name
           avatar {
@@ -23,35 +42,38 @@ async function FetchUserData(name) {
       }
     `;
 
-
     try {
-        const response = await request(endpoint, GET_USER, {
-        name: name, // Pass any required variables
-        });
-        const userData = response;
-
-        const userData2 = {
-            name: userData.User.name,
-            avatar: userData.User.avatar.large,
+        const response = await request(endpoint, GET_USER, { name: name });
+        const userData = {
+            id: response.User.id,
+            name: response.User.name,
+            avatar: response.User.avatar.large,
             statistics: {
-                count: userData.User.statistics.anime.count,
-                minutesWatched: userData.User.statistics.anime.minutesWatched
+                count: response.User.statistics.anime.count,
+                minutesWatched: response.User.statistics.anime.minutesWatched
             }
-        }
-        console.log('Query done.')
-        return userData2;
+        };
+
+        // Save the fetched data to the database
+        await SaveUserData(userData);
+
+        // Cache data before returning
+        cache[cacheKey] = { data: userData, timestamp: currentTime };
+
+        console.log('Query done.');
+        return userData;
     } catch (error) {
         console.error('GraphQL Error:', error.response.errors);
-        const userData2 = {
-          name: 'userData.User.name',
-          avatar: 'https://picsum.photos/200',
-          statistics: {
-              count: '100',
-              minutesWatched: '100'
-          }
-        }
-        return userData2;
+        const fallbackData = {
+            name: 'userData.User.name',
+            avatar: 'https://picsum.photos/200',
+            statistics: {
+                count: '100',
+                minutesWatched: '100'
+            }
+        };
+        return fallbackData;
     }
 }
 
-export {FetchUserData};
+export { FetchUserData };

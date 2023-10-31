@@ -22,3 +22,59 @@
   @import "themes/dark.css";
   @import "themes/light.css";
 }
+
+:root {
+  --light: #d8dbe0;
+  --dark: #28292c;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 50px;  /* Adjusted from 100px to 50px */
+}
+
+label {
+  position: absolute;
+  width: 100%;
+  height: 25px;  /* Adjusted from 50px to 25px */
+  background-color: var(--dark);
+  border-radius: 12.5px;  /* Adjusted from 25px to 12.5px */
+  cursor: pointer;
+}
+
+input {
+  position: absolute;
+  display: none !important;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12.5px;  /* Adjusted from 25px to 12.5px */
+  transition: 0.3s;
+  background-color: var(--light);
+}
+
+input:checked ~ .slider {
+  background-color: var(--dark);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  top: 3.25px;  /* Adjusted from 6.5px to 3.25px */
+  left: 4px;  /* Adjusted from 8px to 4px */
+  width: 18.75px;  /* Adjusted from 37.5px to 18.75px */
+  height: 18.75px;  /* Adjusted from 37.5px to 18.75px */
+  border-radius: 50%;
+  box-shadow: inset 7px -1px 0px 0px var(--light);  /* Adjusted values */
+  background-color: var(--dark);
+  transition: 0.3s;
+}
+
+input:checked ~ .slider::before {
+  transform: translateX(23.75px);  /* Adjusted from 47.5px to 23.75px */
+  background-color: var(--dark);
+  box-shadow: none;
+}

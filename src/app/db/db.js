@@ -124,4 +124,18 @@ const getUser = async (id) => {
   return user;
 };
 
-export { fillDb, findPositionBinary, getUsers, createUser };
+async function SaveUserData(userData) {
+  try {
+      const user = await createUser(
+          userData.id,
+          userData.name,
+          new Date(),
+          userData.statistics.minutesWatched
+      );
+      console.log('User saved to database:', user);
+  } catch (error) {
+      console.error('Database Error:', error);
+  }
+}
+
+export { fillDb, findPositionBinary, getUsers, createUser, SaveUserData };
