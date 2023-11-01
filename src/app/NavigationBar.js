@@ -3,15 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FiHome, FiMenu } from "react-icons/fi";
-import { changeTheme } from "@/utils/helper";
+import ThemeSwitch from './ThemeSwitch'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
-
-  useEffect(() => {
-    changeTheme(isDarkTheme ? "dark" : "light");
-  }, [isDarkTheme]);
 
   return (
     <nav className="bg-primary-color md:h-screen md:w-20 flex flex-col justify-center">
@@ -54,12 +49,7 @@ const Navbar = () => {
           <FiHome size={24} />
         </Link>
         {/* Theme switch */}
-        <div className="toggle-switch mt-4">
-          <label>
-            <input type="checkbox" checked={!isDarkTheme} onChange={() => setIsDarkTheme(!isDarkTheme)} />
-            <span className="slider"></span>
-          </label>
-        </div>
+        <ThemeSwitch />
         {/* Add your other PC menu links here */}
       </div>
     </nav>

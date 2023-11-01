@@ -5,71 +5,45 @@ let cache = {};
 const cacheDuration = 24 * 60 * 60 * 1000;  // 1 day
 
 async function FetchUserData(name) {
+    // Check if the data is stored in local storage
     const cachedData = localStorage.getItem('userData-' + name);
     if (cachedData) {
         console.log('Returning data from local storage.');
         return JSON.parse(cachedData);
     }
 
-    const cacheKey = name;
-    const currentTime = Date.now();
-
-    // Clear expired cache entries
-    Object.keys(cache).forEach(key => {
-        if (currentTime - cache[key].timestamp > cacheDuration) {
-            delete cache[key];
-        }
-    });
-
-    // If data is in cache, return it
-    if (cache[cacheKey]) {
-        console.log('Returning data from cache.');
-        return cache[cacheKey].data;
-    }
-
-    const endpoint = 'https://graphql.anilist.co';
-
+    // Data is not in local storage, fetch it from the API
+    const apiEndpoint = 'https://graphql.anilist.co';
     const GET_USER = gql`
-    query ($id: Int, $name: String) {
-        User (id: $id, name: $name) {
-          id
-          name
-          avatar {
-            large
-            medium
-          }
-          statistics {
-            anime {
-              count
-              minutesWatched
+        query ($id: Int, $name: String) {
+            User (id: $id, name: $name) {
+                id
+                name
+                avatar {
+                    large
+                    medium
+                }
+                statistics {
+                    anime {
+                        count
+                        minutesWatched
+                    }
+                }
             }
-          }
         }
-      }
     `;
 
     try {
-        const response = await request(endpoint, GET_USER, { name: name });
-        const userData = {
-            id: response.User.id,
-            name: response.User.name,
-            avatar: response.User.avatar.large,
-            statistics: {
-                count: response.User.statistics.anime.count,
-                minutesWatched: response.User.statistics.anime.minutesWatched
-            }
-        };
+        const response = await request(apiEndpoint, GET_USER, { name: name });
 
-        // Save the fetched data to the database
-        await SaveUserData(userData);
+        // Send the data to the server for storage
+        await sendUserDataToServer(response.User);
 
-        // Cache data before returning
-        cache[cacheKey] = { data: userData, timestamp: currentTime };
-
-        localStorage.setItem('userData-' + name, JSON.stringify(userData));
+        // Cache the data on the client
+        localStorage.setItem('userData-' + name, JSON.stringify(response.User));
 
         console.log('Query done.');
-        return userData;
+        return response.User;
     } catch (error) {
         console.error('GraphQL Error:', error.response.errors);
         const fallbackData = {
@@ -94,6 +68,16 @@ async function sendUserDataToServer(userData) {
         },
         body: JSON.stringify(userData),
     });
+
+    /*
+    if (response.ok) {
+        const data = await response.json();
+        console.log('Data sent')
+        console.log(data); // This will contain the response from the server
+    } else {
+        console.error('Failed to send user data to the server');
+    }
+    */
 }
 
 

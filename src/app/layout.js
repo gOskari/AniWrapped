@@ -2,7 +2,8 @@ import Navbar from "./NavigationBar";
 import Footer from "./Footer"
 import "../styles/globals.css";
 import { Inter } from "next/font/google";
-import Link from "next/link";
+import { Providers } from './providers'
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="dark" >
       <body className={inter.className + " bg-bg-color text-secondary-color"}>
+        <Providers>
         <header className="fixed top-0">
           <Navbar />
         </header>
@@ -28,6 +30,7 @@ export default function RootLayout({ children }) {
             <Footer />
           </div>
         </footer>
+        </Providers>
       </body>
     </html>
   );

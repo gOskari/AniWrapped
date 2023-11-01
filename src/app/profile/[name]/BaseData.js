@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { changeTheme } from "@/utils/helper";
 
 export default function BaseData(props) {
   try {
@@ -30,22 +29,6 @@ export default function BaseData(props) {
               <span>Hours</span>
               <span>{Math.round(data.statistics.minutesWatched / 60, 2)}</span>
             </div>
-          </div>
-        </div>
-        <div className="grid place-items-center">
-          <div>
-            <button
-              className="py-2 px-8 bg-buttons text-typography m-2"
-              onClick={() => changeTheme("dark")}
-            >
-              Dark
-            </button>
-            <button
-              className="py-2 px-8 bg-buttons text-typography m-2"
-              onClick={() => changeTheme("light")}
-            >
-              Bright
-            </button>
           </div>
         </div>
       </>
