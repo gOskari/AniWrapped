@@ -5,6 +5,12 @@ let cache = {};
 const cacheDuration = 24 * 60 * 60 * 1000;  // 1 day
 
 async function FetchUserData(name) {
+    const cachedData = localStorage.getItem('userData-' + name);
+    if (cachedData) {
+        console.log('Returning data from local storage.');
+        return JSON.parse(cachedData);
+    }
+
     const cacheKey = name;
     const currentTime = Date.now();
 
@@ -60,6 +66,8 @@ async function FetchUserData(name) {
         // Cache data before returning
         cache[cacheKey] = { data: userData, timestamp: currentTime };
 
+        localStorage.setItem('userData-' + name, JSON.stringify(userData));
+
         console.log('Query done.');
         return userData;
     } catch (error) {
@@ -75,5 +83,18 @@ async function FetchUserData(name) {
         return fallbackData;
     }
 }
+
+async function sendUserDataToServer(userData) {
+    // Use an HTTP POST request to send the data to your server
+    const serverEndpoint = '/api/saveUserData';
+    const response = await fetch(serverEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+    });
+}
+
 
 export { FetchUserData };

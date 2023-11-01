@@ -17,7 +17,7 @@ export default function Page({ params }) {
         setTimeout(() => {
           setData(response);
           setLoading(false); // Set loading to false when the data is fetched
-        }, 2000); // 2-second delay (adjust as needed)
+        }, 0); // 2-second delay (adjust as needed)
       } catch (error) {
         // Handle errors here
         console.error(error);
