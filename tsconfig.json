@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/pages/api/saveUserData.js"  ],
   "exclude": [
     "node_modules"
   ]
