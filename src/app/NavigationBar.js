@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FiHome, FiMenu } from "react-icons/fi";
-import ThemeSwitch from './ThemeSwitch'
+import ThemeSwitch from "./ThemeSwitch";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,17 +13,24 @@ const Navbar = () => {
       {/* Hamburger button for mobile */}
       <div className="bg-primary-color fixed bottom-4 right-4 z-20 p-4 md:hidden">
         <button onClick={() => setIsOpen(!isOpen)}>
-          <FiMenu size={24} className="text-secondary-color hover:text-bg-color" />
+          <FiMenu
+            size={24}
+            className="text-secondary-color hover:text-bg-color"
+          />
         </button>
       </div>
-
       {/* Dropdown menu for mobile */}
       <div
-        className={`bg-primary-color fixed bottom-16 right-4 p-4 flex flex-col justify-center shadow-lg transform origin-bottom transition-transform duration-100 ease-in-out overflow-y-hidden ${isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"} md:hidden`}
+        className={`bg-primary-color fixed bottom-16 right-4 p-4 flex flex-col justify-center shadow-lg transform origin-bottom`}
+        style={{
+          transition: "opacity 0.2s",
+          opacity: isOpen ? 1 : 0,
+          pointerEvents: isOpen ? "all" : "none",
+        }}
       >
         {/* Container for menu items with consistent gap */}
         <div
-          className="flex flex-col gap-4"
+          className="flex flex-col"
           style={{
             transition: "opacity 0.2s",
             opacity: isOpen ? 1 : 0,
@@ -36,7 +43,7 @@ const Navbar = () => {
           >
             <FiHome size={24} />
           </Link>
-          {/* You can add more menu items here */}
+          <ThemeSwitch />
         </div>
       </div>
 
