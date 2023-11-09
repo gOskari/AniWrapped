@@ -43,7 +43,7 @@ const Navbar = () => {
           >
             <FiHome size={24} />
           </Link>
-          <ThemeSwitch />
+          <div className="text-2xl text-secondary-color hover:text-bg-color"><ThemeSwitch /></div>
         </div>
       </div>
 
@@ -56,7 +56,9 @@ const Navbar = () => {
           <FiHome size={24} />
         </Link>
         {/* Theme switch */}
-        <ThemeSwitch />
+        <div className="text-2xl text-secondary-color hover:text-bg-color">
+          <ThemeSwitch />
+        </div>
         {/* Add your other PC menu links here */}
       </div>
     </nav>
