@@ -19,9 +19,11 @@ model User {
 }
 
 model PageUser {
-  id                   Int    @id @default(autoincrement())
-  name                 String @unique
+  id                   Int      @id @default(autoincrement())
+  updatedAt            DateTime @default(now())
+  name                 String   @unique
   avatar               String
   anime_count          Int
   anime_minutesWatched Int
+  
 }

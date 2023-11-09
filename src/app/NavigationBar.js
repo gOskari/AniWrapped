@@ -8,6 +8,8 @@ import ThemeSwitch from "./ThemeSwitch";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  //navi enemmä integroituna siihe bodyy
+
   return (
     <nav className="bg-primary-color md:h-screen md:w-20 flex flex-col justify-center">
       {/* Hamburger button for mobile */}
