@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -40,6 +41,7 @@ export default function BaseData({
 }) {
   const [data, setData] = useState(dator);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     // declare the data fetching function
@@ -55,10 +57,16 @@ export default function BaseData({
 
     if (!data) {
       fetchData().catch(console.error);
+      setLoading(false);
     } else {
       setLoading(false);
     }
   }, [data, name, queryAniListAndSaveDataToServer]);
+
+
+  if (!data) {
+    router.push("/");
+  }
 
   return loading === true ? (
     skele
