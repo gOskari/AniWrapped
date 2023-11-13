@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 import { useRouter } from "next/navigation";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -44,33 +44,34 @@ export default function BaseData({
   const router = useRouter();
 
   useEffect(() => {
-    // declare the data fetching function
     const fetchData = async () => {
-      const response = await queryAniListAndSaveDataToServer(name);
-      console.log("PII PIIP", response);
-
-      if (response) {
-        setData(response);
-        setLoading(false);
+      try {
+        const response = await queryAniListAndSaveDataToServer(name);
+        if (response) {
+          setData(response);
+          setLoading(false);
+        } else {
+          // Handle case when response is null
+          setLoading(false);
+          router.push("/");
+        }
+      } catch (error) {
+        console.error(error);
+        alert('ERROR 404  User does not exist')
+        router.push('/')
       }
     };
-
+  
     if (!data) {
-      fetchData().catch(console.error);
-      setLoading(false);
+      fetchData();
     } else {
       setLoading(false);
     }
-  }, [data, name, queryAniListAndSaveDataToServer]);
+  }, [data, name, queryAniListAndSaveDataToServer, router]);
 
-
-  if (!data) {
-    router.push("/");
-  }
-
-  return loading === true ? (
+  return loading ? (
     skele
-  ) : (
+  ) : data (
     <>
       <div className="flex items-center justify-center flex-col gap-10">
         <div className="">
