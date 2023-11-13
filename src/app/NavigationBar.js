@@ -13,8 +13,8 @@ const Navbar = () => {
   return (
     <nav className="bg-primary-color md:h-screen md:w-20 flex flex-col justify-center">
       {/* Hamburger button for mobile */}
-      <div className="bg-primary-color fixed bottom-4 right-4 z-20 p-4 md:hidden">
-        <button onClick={() => setIsOpen(!isOpen)}>
+      <div className="flex items-center align-center bg-primary-color fixed bottom-4 right-4 md:hidden w-14 h-10">
+        <button className="flex items-center justify-center w-20 h-20" onClick={() => setIsOpen(!isOpen)}>
           <FiMenu
             size={24}
             className="text-secondary-color hover:text-bg-color"
