@@ -57,7 +57,6 @@ export default function BaseData({
         }
       } catch (error) {
         console.error(error);
-        alert('ERROR 404  User does not exist')
         router.push('/')
       }
     };
@@ -71,7 +70,7 @@ export default function BaseData({
 
   return loading ? (
     skele
-  ) : data (
+  ) : (
     <>
       <div className="flex items-center justify-center flex-col gap-10">
         <div className="">
@@ -89,11 +88,11 @@ export default function BaseData({
         <div className="text-2xl">
           <div className="flex gap-10 justify-between">
             <span>Anime</span>
-            <span>{data.anime_count}</span>
+            <span className="text-secondary-color">{data.anime_count}</span>
           </div>
           <div className="flex gap-10 justify-between">
             <span>Hours</span>
-            <span>{Math.round(data.anime_minutesWatched / 60, 2)}</span>
+            <span className="text-secondary-color">{Math.round(data.anime_minutesWatched / 60, 2)}</span>
           </div>
         </div>
       </div>
