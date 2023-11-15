@@ -1,6 +1,7 @@
 import BaseData from "./BaseData.js";
 import prisma from "../../../../lib/prisma";
 import { queryAniListAndSaveDataToServer } from "./clientComponent.js";
+import AnimeRadarChart from '../../Chart.js'
 
 function areDatetimes10MinutesApart(datetime1, datetime2) {
   const diffInMilliseconds = Math.abs(datetime1 - datetime2);
@@ -46,6 +47,7 @@ export default async function Page({ params }) {
             queryAniListAndSaveDataToServer={queryAniListAndSaveDataToServer}
           />
         }
+        <div className="h-96 w-4/5"><AnimeRadarChart /></div>
       </div>
     </>
   );
