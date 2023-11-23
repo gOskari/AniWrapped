@@ -1,5 +1,4 @@
 'use client'
-
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -20,6 +19,10 @@ ChartJS.register(
   Legend
 );
 
+const rootStyle = getComputedStyle(document.documentElement);
+const primaryColor = rootStyle.getPropertyValue('--primary-color').trim();
+const secondaryColor = rootStyle.getPropertyValue('--secondary-color').trim();
+
 const data = {
   labels: [
     'Action',
@@ -32,7 +35,7 @@ const data = {
       label: 'Genres Watched',
       data: [59, 80, 90, 81],
       backgroundColor: 'rgba(255,255,255, 0.5)',
-      borderColor: 'rgba(0, 123, 255, 1)',
+      borderColor: secondaryColor,
       borderWidth: 3,
     },
   ],
@@ -47,6 +50,7 @@ const options = {
         display: true,
         color: 'rgba(255, 255, 255, 0.5)'
       },
+      beginAtZero: true,
       gridLines: {
         color: 'rgba(255, 255, 255, 0.5)'
       },

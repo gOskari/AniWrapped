@@ -39,7 +39,7 @@ export default async function Page({ params }) {
 
   return (
     <>
-      <div className="flex h-screen items-center justify-center flex-col">
+      <div className="m-10 flex h-fit items-center justify-center flex-col">
         {
           <BaseData
             dator={data}
@@ -47,7 +47,7 @@ export default async function Page({ params }) {
             queryAniListAndSaveDataToServer={queryAniListAndSaveDataToServer}
           />
         }
-        <div className="h-96 w-4/5"><AnimeRadarChart /></div>
+        <div className="h-96 w-4/5 p-10"><AnimeRadarChart /></div>
       </div>
     </>
   );
