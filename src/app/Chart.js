@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -7,8 +7,8 @@ import {
   Filler,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Radar } from 'react-chartjs-2';
+} from "chart.js";
+import { Radar } from "react-chartjs-2";
 
 ChartJS.register(
   RadialLinearScale,
@@ -20,26 +20,8 @@ ChartJS.register(
 );
 
 const rootStyle = getComputedStyle(document.documentElement);
-const primaryColor = rootStyle.getPropertyValue('--primary-color').trim();
-const secondaryColor = rootStyle.getPropertyValue('--secondary-color').trim();
-
-const data = {
-  labels: [
-    'Action',
-    'Adventure',
-    'Comedy',
-    'Drama'
-  ],
-  datasets: [
-    {
-      label: 'Genres Watched',
-      data: [59, 80, 90, 81],
-      backgroundColor: 'rgba(255,255,255, 0.5)',
-      borderColor: secondaryColor,
-      borderWidth: 3,
-    },
-  ],
-};
+const primaryColor = rootStyle.getPropertyValue("--primary-color").trim();
+const secondaryColor = rootStyle.getPropertyValue("--secondary-color").trim();
 
 const options = {
   responsive: true,
@@ -48,39 +30,64 @@ const options = {
     r: {
       angleLines: {
         display: true,
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: "rgba(255, 255, 255, 0.5)",
       },
       beginAtZero: true,
       gridLines: {
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: "rgba(255, 255, 255, 0.5)",
       },
       ticks: {
-        display: false
+        display: false,
       },
       pointLabels: {
         font: {
-          size: 14
+          size: 14,
         },
-        color: 'rgba(255, 255, 255, 0.7)'
-      }
+        color: "rgba(255, 255, 255, 0.7)",
+      },
     },
   },
   elements: {
     line: {
-      borderWidth: 3
+      borderWidth: 3,
     },
   },
   plugins: {
     legend: {
       labels: {
-        color: 'white',
+        color: "white",
         boxWidth: 0,
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
-const AnimeRadarChart = () => {
+const AnimeRadarChart = (genres) => {
+  genres = genres.genres;
+
+  const sortedGenres = genres.sort((a, b) => b.count - a.count);
+
+  //console.log('sorted', sortedGenres);
+
+  let a = genres.find((genre) => genre.genre === "Fantasy") || 100;
+  let b = genres.find((genre) => genre.genre === "Action") || 100;
+  let c = genres.find((genre) => genre.genre === "Comedy") || 100;
+  let d = genres.find((genre) => genre.genre === "Drama") || 100;
+  let e = genres.find((genre) => genre.genre === "Romance") || 100;
+
+  const data = {
+    labels: ["Fantasy", "Action", "Comedy", "Drama", "Romance"],
+    datasets: [
+      {
+        label: "Genres Watched",
+        data: [a.count, b.count, c.count, d.count, e.count],
+        backgroundColor: "rgba(255,255,255, 0.5)",
+        borderColor: secondaryColor,
+        borderWidth: 3,
+      },
+    ],
+  };
+
   return <Radar data={data} options={options} />;
 };
 

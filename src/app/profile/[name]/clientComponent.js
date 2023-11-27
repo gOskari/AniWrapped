@@ -16,13 +16,19 @@ const queryAniListAndSaveDataToServer = async (name) => {
           anime {
             count
             minutesWatched
+            genres {
+              genre
+              count
+            }
           }
         }
       }
     }
   `;
 
-  const anilist_response = await request(aniListApiEndpoint, GET_USER, { name: name });
+  const anilist_response = await request(aniListApiEndpoint, GET_USER, {
+    name: name,
+  });
 
   // Use an HTTP POST request to send the data to your server
   const serverEndpoint = "/api/saveUserData";
@@ -46,4 +52,4 @@ const queryAniListAndSaveDataToServer = async (name) => {
   }
 };
 
-export {queryAniListAndSaveDataToServer};
+export { queryAniListAndSaveDataToServer };

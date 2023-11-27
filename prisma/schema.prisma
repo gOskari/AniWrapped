@@ -25,5 +25,14 @@ model PageUser {
   avatar               String
   anime_count          Int
   anime_minutesWatched Int
-  
+  genres               Genre[]
+}
+
+model Genre {
+  id     Int    @id @default(autoincrement())
+  genre  String
+  count  Int
+  userId Int // This is a foreign key linking Genre to PageUser
+
+  user PageUser @relation(fields: [userId], references: [id])
 }

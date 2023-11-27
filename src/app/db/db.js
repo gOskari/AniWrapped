@@ -36,8 +36,6 @@ const getAnilistData = async (page, perPage) => {
       page: page,
       perPage: perPage,
     });
-
-    console.log("response: ", response.Page.users);
     return response;
   } catch (error) {
     console.log("Anilist query error:", error);
@@ -65,12 +63,12 @@ const fillDb = async (page, perPage) => {
 };
 
 const findPositionBinary = (data, num) => {
-  console.log(data.Page.users);
+  console.log('findPositionBinary | ', data);
 
   let arr = [];
-  for (const item of data.Page.users) {
-    console.log("item:", item.statistics.anime.minutesWatched);
-    arr.push(item.statistics.anime.minutesWatched);
+  for (const item of data) {
+    console.log("item:", item.minutesWatched);
+    arr.push(item.minutesWatched);
   }
 
   console.log(arr); // [1, 2, 3, 4]
@@ -88,7 +86,7 @@ const findPositionBinary = (data, num) => {
     }
   }
 
-  return low;
+  return (low + 1 + "/" + data.length);
 };
 
 const getUsers = async () => {
