@@ -34,5 +34,5 @@ model Genre {
   count  Int
   userId Int // This is a foreign key linking Genre to PageUser
 
-  user PageUser @relation(fields: [userId], references: [id])
+  user PageUser @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

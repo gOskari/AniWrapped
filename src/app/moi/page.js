@@ -1,4 +1,3 @@
-
 // Your JavaScript file or component
 
 // Your JavaScript file or component
@@ -14,12 +13,11 @@ async function fetchUserByName(userName) {
     );
 
     if (!response.ok) {
-        console.log(response.statusText);
+      console.log(response.statusText);
       throw new Error("Network response was not ok");
     }
 
     const data = await response.json();
-    console.log("User Data:", data);
     return data;
     // Handle the data as needed
   } catch (error) {
@@ -29,10 +27,40 @@ async function fetchUserByName(userName) {
 }
 
 // Call the fetchUserByName function with the desired user's name
-const user = await fetchUserByName("Ok");
 
-console.log('user', user);
+/*
+const responsee = fetch(process.env.URL + `/api/getUserData`, {
+  method: "DELETE",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ id:user.id }),
+});
+*/
 
-export default function Page() {
+export default async function Page() {
+  const user = await fetchUserByName("Ok");
+
+  /*
+  const response = await fetch(
+    process.env.URL + `/api/deleteUserData?name=${encodeURIComponent('moi')}`, { cache:'no-store'}
+  );
+  */
+
+  const res = await fetch(process.env.URL + `/api/deleteUserData`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: 'moi' }),
+    cache: 'no-store',
+  });
+  
+  if (res.ok) {
+    const responseData = await res.json();
+    console.log('res:', responseData);
+  } else {
+    console.log(`Error: ${res.status} - ${res.statusText}`);
+  }
   return <div>{JSON.stringify(user)}</div>;
 }

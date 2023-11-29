@@ -47,7 +47,7 @@ const queryAniListAndSaveDataToServer = async (name) => {
     //console.log('PII PII', data); // This will contain the response from the server
     return data;
   } else {
-    console.error("Failed to send user data to the server");
+    console.error("Failed to send user data to the server. Error:", response.json());
     return null;
   }
 };

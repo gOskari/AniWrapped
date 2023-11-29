@@ -6,6 +6,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { findPositionBinary } from "../../db/db.js";
 import AnimeRadarChart from "../../Chart.js";
+import { queryAniListAndSaveDataToServer } from "./clientComponent.js";
 
 const skele = (
   <SkeletonTheme baseColor="#0B1622" highlightColor="#151F2E">
@@ -36,10 +37,16 @@ const skele = (
   </SkeletonTheme>
 );
 
+const areDatetimes10MinutesApart = (datetime1, datetime2) => {
+  const diffInMilliseconds = Math.abs(datetime1 - datetime2);
+  const diffInMinutes = diffInMilliseconds / (1000 * 60);
+
+  return diffInMinutes >= 10;
+};
+
 export default function BaseData({
   name,
-  queryAniListAndSaveDataToServer,
-  users,
+//  users,
 }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,19 +54,37 @@ export default function BaseData({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiUrl = `/api/getUserData?name=${encodeURIComponent(name)}`;
-        console.log("API URL:", apiUrl);
-
-        const response = await fetch(apiUrl);
-        console.log("Response Status:", response.status);
+        const response = await fetch(`/api/getUserData?name=${encodeURIComponent(name)}`, { cache:'no-store' });
 
         if (!response.ok) {
           console.log("Error Response:", await response.text());
           throw new Error("Network response was not ok");
         }
 
-        const data = await response.json();
-        setUserData(data);
+        const user = await response.json();
+
+        // CHECK IF DATA IS OLD
+        if (areDatetimes10MinutesApart(user.updatedAt, new Date())) {
+          console.log("The datetimes are 10 minutes apart.");
+          
+          // DELETE
+          const res = await fetch(process.env.URL + `/api/deleteUserData`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: name }),
+            cache: 'no-store',
+          });
+
+          // REFETCH
+          const res2 = await queryAniListAndSaveDataToServer(name);
+          setUserData(res2.json());
+
+        } else {
+          console.log("The datetimes are NOT 10 minutes apart.");
+          setUserData(user);
+        }
       } catch (error) {
         console.error("Error fetching user data:", error.message);
 
@@ -122,7 +147,7 @@ export default function BaseData({
             </span>
           </div>
         </div>
-        <div>{findPositionBinary(users, userData.anime_minutesWatched)}</div>
+        {/*<div>{findPositionBinary(users, userData.anime_minutesWatched)}</div> */}
       </div>
       <div className="h-96 w-4/5 p-10">
         <AnimeRadarChart genres={userData.genres} />
