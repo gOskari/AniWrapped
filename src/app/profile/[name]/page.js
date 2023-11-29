@@ -1,54 +1,53 @@
 import BaseData from "./BaseData.js";
-import prisma from "../../../../lib/prisma";
-//import { fillDb } from "../../db/db.js"
+import { deleteUser, getUser } from "@/lib/db.js";
 
-async function getAllUsers() {
-  const users = await prisma.user.findMany();
-  return users;
-}
+const areDatetimes10MinutesApart = (datetime1, datetime2) => {
+  const diffInMilliseconds = Math.abs(datetime1 - datetime2);
+  const diffInMinutes = diffInMilliseconds / (1000 * 60);
 
-const createUser = async (
-  id,
-  name,
-  updatedAt,
-  anime_minutesWatched,
-  standardDeviation
-) => {
-  console.log(new Date());
-  const user = await prisma.user.create({
-    data: {
-      name: name || "user",
-      updatedAt: updatedAt || new Date(),
-      anime_minutesWatched: anime_minutesWatched || 123,
-      standardDeviation: standardDeviation || 1.0,
-    },
-  });
-  return user;
+  console.log('diff in mins', diffInMinutes);
+  return diffInMinutes >= 10;
 };
 
-
 export default async function Page({ params }) {
+  const name = params.name;
 
-  //console.log(await createUser(10, 'moi', '2334', 100, 10));
-  //await fillDb(1, 30);
+  const fetchData = async () => {
+    try {
+      const response = await getUser(name);
+      const user = response;
 
-  /*
-  const allUsers = getAllUsers()
-  .then(users => {
-    return users;
-  })
-  .catch(error => {
-    console.error('Error fetching users:', error);
-  });
-  */
+      // CHECK IF DATA IS OLD
+      if (areDatetimes10MinutesApart(new Date(user.updatedAt), new Date())) {
+        console.log("The datetimes are 10 minutes apart.");
+
+        // DELETE
+        await deleteUser(name);
+
+        return null;
+      } else {
+        console.log("The datetimes are NOT 10 minutes apart.");
+        return user;
+      }
+    } catch (error) {
+      return null;
+    }
+  };
+
+
+  const pageUserData = await fetchData();
+
+  if (pageUserData) {
+    console.log('Data found on server.');
+  }
 
   return (
     <>
       <div className="m-10 flex h-fit items-center justify-center flex-col">
         {
           <BaseData
-            name={params.name}
-         //   users={await allUsers}
+            pageUserData={pageUserData}
+            pageUserName={params.name}
           />
         }
         {/*<div className="h-96 w-4/5 p-10"><AnimeRadarChart /></div>*/}

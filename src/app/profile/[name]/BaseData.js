@@ -4,9 +4,43 @@ import { useEffect, useState } from "react";
 //import { useRouter } from "next/navigation";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { findPositionBinary } from "../../db/db.js";
 import AnimeRadarChart from "../../Chart.js";
-import { queryAniListAndSaveDataToServer } from "./clientComponent.js";
+import { request, gql } from "graphql-request";
+import { saveUser } from "@/lib/db.js";
+
+const getAniList = async (name) => {
+  const query = gql`
+    query ($id: Int, $name: String) {
+      User(id: $id, name: $name) {
+        id
+        name
+        avatar {
+          large
+          medium
+        }
+        statistics {
+          anime {
+            count
+            minutesWatched
+            genres {
+              genre
+              count
+            }
+          }
+        }
+      }
+    }
+  `;
+  console.log("Queried AniList.");
+  try {
+    const res = await request("https://graphql.anilist.co", query, {
+      name: name,
+    });
+    return res;
+  } catch {
+    return null;
+  }
+};
 
 const skele = (
   <SkeletonTheme baseColor="#0B1622" highlightColor="#151F2E">
@@ -37,88 +71,51 @@ const skele = (
   </SkeletonTheme>
 );
 
-const areDatetimes10MinutesApart = (datetime1, datetime2) => {
-  const diffInMilliseconds = Math.abs(datetime1 - datetime2);
-  const diffInMinutes = diffInMilliseconds / (1000 * 60);
+const queryAniListAndSaveDataToServer = async (name) => {
+  const res = await getAniList(name);
 
-  return diffInMinutes >= 10;
+  if (!res) {
+    return null;
+  }
+
+  const res2 = await saveUser(res);
+
+  if (res2) {
+    console.log("Data sent");
+    return res2;
+  } else {
+    console.log("Data not sent:");
+    return null;
+  }
 };
 
-export default function BaseData({
-  name,
-//  users,
-}) {
+export default function BaseData({ pageUserData, pageUserName }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/getUserData?name=${encodeURIComponent(name)}`, { cache:'no-store' });
-
-        if (!response.ok) {
-          console.log("Error Response:", await response.text());
-          throw new Error("Network response was not ok");
-        }
-
-        const user = await response.json();
-
-        // CHECK IF DATA IS OLD
-        if (areDatetimes10MinutesApart(user.updatedAt, new Date())) {
-          console.log("The datetimes are 10 minutes apart.");
-          
-          // DELETE
-          const res = await fetch(process.env.URL + `/api/deleteUserData`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ name: name }),
-            cache: 'no-store',
-          });
-
-          // REFETCH
-          const res2 = await queryAniListAndSaveDataToServer(name);
-          setUserData(res2.json());
-
-        } else {
-          console.log("The datetimes are NOT 10 minutes apart.");
-          setUserData(user);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error.message);
-
-        try {
-          const secondResponse = await queryAniListAndSaveDataToServer(name);
-
-          if (!secondResponse) {
-            throw new Error("Network response no work");
-          }
-
-          const secondData = await secondResponse;
-          setUserData(secondData);
-        } catch (secondError) {
-          console.error(
-            "Error fetching data in the second attempt:",
-            secondError.message
-          );
-          setLoading(false);
-        }
-      } finally {
+      console.log("Fetching data...");
+      const res = await queryAniListAndSaveDataToServer(pageUserName);
+      if (res) {
+        setUserData(res);
         setLoading(false);
       }
     };
 
-    fetchData();
-  }, []); // Empty dependency array to run the effect only once on component mount
+    if (!pageUserData) {
+      fetchData();
+    } else {
+      setUserData(pageUserData);
+      setLoading(false);
+    }
+  }, [pageUserData, pageUserName]); // Empty dependency array to run the effect only once on component mount
 
   if (loading) {
     return skele;
   }
 
-  if (!userData) {
-    return <p>Error fetching user data</p>;
-  }
+  console.log(userData);
 
   return (
     <>
@@ -147,7 +144,6 @@ export default function BaseData({
             </span>
           </div>
         </div>
-        {/*<div>{findPositionBinary(users, userData.anime_minutesWatched)}</div> */}
       </div>
       <div className="h-96 w-4/5 p-10">
         <AnimeRadarChart genres={userData.genres} />
