@@ -29,7 +29,7 @@ const getUser = async (name: string): Promise<prisma.PageUser | null> => {
   });
 
   if (!user) {
-    console.log('User not found.');
+    console.log('getUser error occured.');
     return null;
   }
 
@@ -37,17 +37,16 @@ const getUser = async (name: string): Promise<prisma.PageUser | null> => {
 };
 
 // The saveUser function should match the Prisma types
-const saveUser = async (User: { User: UserType }): Promise<prisma.PageUser | null> => {
-
+const saveUser = async (user: UserType): Promise<prisma.PageUser | null> => {
   try {
     const returnUser = await prisma.pageUser.create({
       data: {
-        name: User.name,
-        avatar: User.avatar,
-        anime_count: User.anime_count,
-        anime_minutesWatched: User.anime_minutesWatched,
+        name: user.name,
+        avatar: user.avatar,
+        anime_count: user.anime_count,
+        anime_minutesWatched: user.anime_minutesWatched,
         genres: {
-          create: User.genres.map((genre) => ({
+          create: user.genres.map((genre) => ({
             genre: genre.genre,
             count: genre.count,
           })),
@@ -61,7 +60,7 @@ const saveUser = async (User: { User: UserType }): Promise<prisma.PageUser | nul
     console.log("Saved user.");
     return returnUser;
   } catch (e) {
-    console.error("saveUser error occurred:", e);
+    console.error("saveUser error occurred:");
     return null;
   }
 };
@@ -83,7 +82,7 @@ const deleteUser = async (name: string): Promise<void> => {
       console.log('User not found or already deleted.');
     }
   } catch(e) {
-    console.error('Deleting error occurred', e);
+    console.error('Deleting error occurred');
   }
 };
 

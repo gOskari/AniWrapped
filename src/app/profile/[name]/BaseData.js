@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-//import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import AnimeRadarChart from "../../Chart.js";
@@ -36,8 +36,10 @@ const getAniList = async (name) => {
     const res = await request("https://graphql.anilist.co", query, {
       name: name,
     });
+    console.log("Anilist query succesful");
     return res;
   } catch {
+    console.log("Failed Anilist query; returned null.");
     return null;
   }
 };
@@ -71,53 +73,43 @@ const skele = (
   </SkeletonTheme>
 );
 
-const queryAniListAndSaveDataToServer = async (name) => {
-  const res = await getAniList(name);
-
-  if (!res) {
-    return null;
-  }
-
-  console.log("toine", await res.User);
-
-  const resUser = await res.User;
-
-  const user = {
-    name: resUser.name || "fallback",
-    avatar: resUser.avatar.large || "fallback",
-    anime_count: resUser.statistics.anime.count || 0,
-    anime_minutesWatched: resUser.statistics.anime.minutesWatched || 0,
-    genres: resUser.statistics.anime.genres || [
-      { count: 1, genre: "a" },
-      { count: 1, genre: "b" },
-      { count: 1, genre: "c" },
-      { count: 1, genre: "d" },
-      { count: 1, genre: "e" },
-    ],
-  };
-
-  const res2 = await saveUser(user);
-
-  if (res2) {
-    console.log("Data sent");
-    return res2;
-  } else {
-    console.log("Data not sent:");
-    return null;
-  }
-};
-
 export default function BaseData({ pageUserData, pageUserName }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("Fetching data...");
-      const res = await queryAniListAndSaveDataToServer(pageUserName);
-      if (res) {
-        setUserData(res);
+      const { User } = await getAniList(pageUserName) || {};
+
+      // ANILIST FAIL
+      if (!User) {
+        console.log('AniList returned null. Back to "/"')
+        router.push('/');
+        return;
+      }
+
+      const user = {
+        name: User.name || "fallback",
+        avatar: User.avatar.large || "fallback",
+        anime_count: User.statistics.anime.count || 0,
+        anime_minutesWatched: User.statistics.anime.minutesWatched || 0,
+        genres: User.statistics.anime.genres || [
+          { count: 1, genre: "a" },
+          { count: 1, genre: "b" },
+          { count: 1, genre: "c" },
+          { count: 1, genre: "d" },
+          { count: 1, genre: "e" },
+        ],
+      };
+
+      const savedUser = await saveUser(user);
+
+      if (savedUser) {
+        setUserData(savedUser);
         setLoading(false);
+      } else {
+        console.log("Saving user failed.");
       }
     };
 
@@ -127,13 +119,11 @@ export default function BaseData({ pageUserData, pageUserName }) {
       setUserData(pageUserData);
       setLoading(false);
     }
-  }, [pageUserData, pageUserName]); // Empty dependency array to run the effect only once on component mount
+  }, []); // Empty dependency array to run the effect only once on component mount
 
   if (loading) {
     return skele;
   }
-
-  console.log(userData);
 
   return (
     <>
