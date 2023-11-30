@@ -6,7 +6,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import AnimeRadarChart from "../../Chart.js";
 import { request, gql } from "graphql-request";
-import { saveUser } from "@/lib/db.js";
+import { saveUser } from "@/lib/db.ts";
 
 const getAniList = async (name) => {
   const query = gql`
@@ -78,7 +78,25 @@ const queryAniListAndSaveDataToServer = async (name) => {
     return null;
   }
 
-  const res2 = await saveUser(res);
+  console.log("toine", await res.User);
+
+  const resUser = await res.User;
+
+  const user = {
+    name: resUser.name || "fallback",
+    avatar: resUser.avatar.large || "fallback",
+    anime_count: resUser.statistics.anime.count || 0,
+    anime_minutesWatched: resUser.statistics.anime.minutesWatched || 0,
+    genres: resUser.statistics.anime.genres || [
+      { count: 1, genre: "a" },
+      { count: 1, genre: "b" },
+      { count: 1, genre: "c" },
+      { count: 1, genre: "d" },
+      { count: 1, genre: "e" },
+    ],
+  };
+
+  const res2 = await saveUser(user);
 
   if (res2) {
     console.log("Data sent");

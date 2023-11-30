@@ -1,5 +1,5 @@
 import BaseData from "./BaseData.js";
-import { deleteUser, getUser } from "@/lib/db.js";
+import { deleteUser, getUser } from "@/lib/db.ts";
 
 const areDatetimes10MinutesApart = (datetime1, datetime2) => {
   const diffInMilliseconds = Math.abs(datetime1 - datetime2);
