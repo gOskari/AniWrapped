@@ -1,6 +1,7 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { request, gql } from "graphql-request";
+import { cache } from "react";
 
 // TypeScript types should match your Prisma model, including nested structures
 type GenreType = {
@@ -17,7 +18,7 @@ type UserType = {
 };
 
 // Since Prisma's findFirst method returns the PageUser type, we should match that
-const getUser = async (name: string): Promise<prisma.PageUser | null> => {
+const getUser = cache(async (name: string): Promise<prisma.PageUser | null> => {
   const user = await prisma.pageUser.findFirst({
     where: {
       name: {
@@ -27,18 +28,31 @@ const getUser = async (name: string): Promise<prisma.PageUser | null> => {
     },
     include: { genres: true },
   });
-
   if (!user) {
-    console.log("getUser error occured.");
+    console.log('User not found.');
+    console.log('getUser error occured.');
     return null;
   }
-
+  console.log('Found user:', user.name);
   return user;
-};
-
+});
 // The saveUser function should match the Prisma types
-const saveUser = async (user: UserType): Promise<prisma.PageUser | null> => {
+const saveUser = async (User: UserType): Promise<prisma.PageUser | null> => {
   try {
+    const user = {
+      name: User.name || "fallback",
+      avatar: User.avatar.large || "fallback",
+      anime_count: User.statistics.anime.count || 0,
+      anime_minutesWatched: User.statistics.anime.minutesWatched || 0,
+      genres: User.statistics.anime.genres || [
+        { count: 1, genre: "a" },
+        { count: 1, genre: "b" },
+        { count: 1, genre: "c" },
+        { count: 1, genre: "d" },
+        { count: 1, genre: "e" },
+      ],
+    };
+
     const returnUser = await prisma.pageUser.create({
       data: {
         name: user.name,
@@ -86,27 +100,7 @@ const deleteUser = async (name: string): Promise<void> => {
   }
 };
 
-const findPositionBinary = (data: prisma.PageUser[], num: number): string => {
-  let arr = data.map((item) => item.anime_minutesWatched);
-
-  let low = 0;
-  let high = arr.length;
-
-  while (low < high) {
-    const mid = Math.floor((low + high) / 2);
-
-    if (arr[mid] < num) {
-      low = mid + 1;
-    } else {
-      high = mid;
-    }
-  }
-
-  return `${low + 1}/${data.length}`;
-};
-
 const createAniListUsers = async () => {
-  console.log("ok");
   const aniListQuery = async (page, perPage) => {
     const endpoint = "https://graphql.anilist.co";
     const query = gql`
@@ -146,29 +140,11 @@ const createAniListUsers = async () => {
     }
   };
 
-  const createUser = async (
-    name,
-    updatedAt,
-    anime_minutesWatched,
-    standardDeviation
-  ) => {
-    const user = await prisma.user.create({
-      data: {
-        name: name,
-        updatedAt: updatedAt,
-        anime_minutesWatched: anime_minutesWatched,
-        standardDeviation: standardDeviation,
-      },
-    });
-    return user;
-  };
-
   let perPage = 50;
   let hasNextPage = true;
 
   for (let page = 1; hasNextPage; page++) {
     const response = await aniListQuery(page, perPage);
-    console.log("response tuli", response);
 
     if (!response) {
       console.log("Ei responsee");
@@ -189,26 +165,31 @@ const createAniListUsers = async () => {
     response.Page.users.forEach(async (user) => {
       console.log("for lööp");
       try {
-        console.log('user:', user);
-        const createdUser = await createUser(
-          user.name || "default",
-          user.updatedAt || new Date(),
-          user.statistics.anime.minutesWatched || 0,
-          user.statistics.anime.standardDeviation || 0
-        );
+        const creatableUser = {
+          name: user.name || "default",
+          updatedAt: new Date(user.updatedAt * 1000) || new Date(),
+          anime_minutesWatched: user.statistics.anime.minutesWatched || 0,
+          standardDeviation: user.statistics.anime.standardDeviation || 0,
+        };
+
+        const createdUser = await prisma.user.create({
+          data: creatableUser,
+        });
 
         console.log("Created user: ", createdUser.name);
       } catch (e) {
         console.log("createAnilistUsers | Failed to createUser:", e);
       }
-    })
+    });
   }
 };
 
-export {
-  findPositionBinary,
-  getUser,
-  saveUser,
-  deleteUser,
-  createAniListUsers,
+const getUsers = async () => {
+  const users = await prisma.User.findMany();
+
+  //console.log(users);
+  console.log("getUsers()");
+  return users;
 };
+
+export { getUser, saveUser, deleteUser, createAniListUsers, getUsers };
