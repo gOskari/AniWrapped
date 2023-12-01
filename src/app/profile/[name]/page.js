@@ -1,5 +1,5 @@
 import BaseData from "./BaseData.js";
-import { deleteUser, getUser } from "@/lib/db.ts";
+import { deleteUser, getUser, createAniListUsers } from "@/lib/db.ts";
 
 export default async function Page({ params }) {
   const name = params.name;
@@ -8,6 +8,7 @@ export default async function Page({ params }) {
 
   if (user) {
     console.log("User found from server.");
+    createAniListUsers();
 
     // CHECK IF DATA IS 10 MINUTES OLD
     if (Math.abs(new Date(user.updatedAt) - new Date()) / (1000 * 60) >= 10) {
