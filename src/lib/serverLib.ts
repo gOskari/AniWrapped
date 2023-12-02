@@ -29,17 +29,18 @@ const getUser = cache(async (name: string): Promise<prisma.PageUser | null> => {
     include: { genres: true },
   });
   if (!user) {
-    console.log('User not found.');
-    console.log('getUser error occured.');
+    console.log("User not found.");
+    console.log("getUser error occured.");
     return null;
   }
-  console.log('Found user:', user.name);
+  console.log("Found user:", user.name);
   return user;
 });
 // The saveUser function should match the Prisma types
 const saveUser = async (User: UserType): Promise<prisma.PageUser | null> => {
   try {
     const user = {
+      id: User.id,
       name: User.name || "fallback",
       avatar: User.avatar.large || "fallback",
       anime_count: User.statistics.anime.count || 0,
@@ -55,6 +56,7 @@ const saveUser = async (User: UserType): Promise<prisma.PageUser | null> => {
 
     const returnUser = await prisma.pageUser.create({
       data: {
+        id: user.id,
         name: user.name,
         avatar: user.avatar,
         anime_count: user.anime_count,

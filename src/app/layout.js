@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="dark">
-      <body className={inter.className + " bg-bg-color text-secondary-color"}>
+      <body className={inter.className + " bg-bg-color text-secondary-color debug-screens"}>
         <Providers>
           <header className="fixed top-0">
             <Navbar />

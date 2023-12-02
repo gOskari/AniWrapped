@@ -26,5 +26,5 @@ module.exports = {
       backgroundColor: ["hover", "focus"],
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require("tailwindcss-debug-screens")],
 };
