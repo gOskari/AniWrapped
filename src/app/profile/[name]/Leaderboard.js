@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { unstable_cache } from "next/cache";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+
 import { useState, useEffect } from "react";
 import { request, gql } from "graphql-request";
-import Image from "next/image";
 
 const Leaderboard = ({ id }) => {
   const [users, setUsers] = useState();
@@ -10,8 +12,19 @@ const Leaderboard = ({ id }) => {
 
   useEffect(() => {
     const gettaa = async (id) => {
+      console.log(getFollowing(id));
+
+      /*
+      const getCachedUser = unstable_cache(
+        async (id) => getFollowing(id),
+        ['my-app-user']
+      );
+    
+      const users = getCachedUser(id);
+      */
+
       const users = await getFollowing(id);
-      setUsers(users);
+      setUsers(await users);
     };
     gettaa(id);
   }, []);
@@ -34,9 +47,7 @@ const Leaderboard = ({ id }) => {
               width="100"
               className="rounded-full"
             />
-            <div>
-              {user.name}
-            </div>
+            <div>{user.name}</div>
             <div>
               {Math.round(user.statistics.anime.minutesWatched / 60)} Hours
             </div>
@@ -47,12 +58,12 @@ const Leaderboard = ({ id }) => {
   );
 };
 
-const getFollowing = async (id) => {
-  console.log(id);
+const getFollowing = async (param) => {
+  console.log(param);
   const query = gql`
-    query ($id: Int!) {
+    query ($param: Int!) {
       Page(page: 1, perPage: 20) {
-        following(userId: $id, sort: WATCHED_TIME_DESC) {
+        following(userId: $param, sort: WATCHED_TIME_DESC) {
           id
           name
           avatar {
@@ -69,7 +80,7 @@ const getFollowing = async (id) => {
   `;
 
   const res = await request("https://graphql.anilist.co", query, {
-    id: id,
+    param: param,
   });
 
   if (!res) {

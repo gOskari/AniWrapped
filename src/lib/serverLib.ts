@@ -18,7 +18,7 @@ type UserType = {
 };
 
 // Since Prisma's findFirst method returns the PageUser type, we should match that
-const getUser = cache(async (name: string): Promise<prisma.PageUser | null> => {
+const getUser = cache(async (name: string) => {
   const user = await prisma.pageUser.findFirst({
     where: {
       name: {
@@ -37,7 +37,7 @@ const getUser = cache(async (name: string): Promise<prisma.PageUser | null> => {
   return user;
 });
 // The saveUser function should match the Prisma types
-const saveUser = async (User: UserType): Promise<prisma.PageUser | null> => {
+const saveUser = async (User: UserType)=> {
   try {
     const user = {
       id: User.id,
@@ -81,7 +81,7 @@ const saveUser = async (User: UserType): Promise<prisma.PageUser | null> => {
   }
 };
 
-const deleteUser = async (name: string): Promise<void> => {
+const deleteUser = async (name: string) => {
   try {
     const deletedCount = await prisma.pageUser.deleteMany({
       where: {
