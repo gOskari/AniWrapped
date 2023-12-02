@@ -3,22 +3,7 @@ import prisma from "@/lib/prisma";
 import { request, gql } from "graphql-request";
 import { cache } from "react";
 
-// TypeScript types should match your Prisma model, including nested structures
-type GenreType = {
-  genre: string;
-  count: number;
-};
-
-type UserType = {
-  name: string;
-  avatar: string;
-  anime_count: number;
-  anime_minutesWatched: number;
-  genres: GenreType[];
-};
-
-// Since Prisma's findFirst method returns the PageUser type, we should match that
-const getUser = cache(async (name: string) => {
+const getUser = cache(async (name) => {
   const user = await prisma.pageUser.findFirst({
     where: {
       name: {
@@ -36,8 +21,8 @@ const getUser = cache(async (name: string) => {
   console.log("Found user:", user.name);
   return user;
 });
-// The saveUser function should match the Prisma types
-const saveUser = async (User: UserType)=> {
+
+const saveUser = async (User) => {
   try {
     const user = {
       id: User.id,
@@ -81,7 +66,7 @@ const saveUser = async (User: UserType)=> {
   }
 };
 
-const deleteUser = async (name: string) => {
+const deleteUser = async (name) => {
   try {
     const deletedCount = await prisma.pageUser.deleteMany({
       where: {
