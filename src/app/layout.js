@@ -8,7 +8,29 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "AniWrapped",
-  description: "Cool site",
+  description: "Search and compare among 9394903 active AniList users!",
+  metadataBase: new URL('https://s4.anilist.co'),
+  openGraph: {
+    title: 'AniWrapped',
+    description: 'Search and compare among 9394903 active AniList users!',
+    //url: 'https://nextjs.org',
+    //siteName: 'Next.js',
+    images: [
+      {
+        url: '/file/anilistcdn/media/anime/banner/99420-wwjSxDuLveEu.jpg',
+        width: 800,
+        height: 600,
+      },
+      {
+        url: '/file/anilistcdn/media/anime/banner/99420-wwjSxDuLveEu.jpg',
+        width: 1800,
+        height: 1600,
+        alt: 'My custom alt',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({ children }) {
