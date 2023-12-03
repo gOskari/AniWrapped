@@ -36,7 +36,6 @@ const getAniList = async (name) => {
   }
 };
 
-
 const findPositionBinary = (data, num) => {
   let arr = data.map((item) => item.anime_minutesWatched).sort((a, b) => b - a);
 

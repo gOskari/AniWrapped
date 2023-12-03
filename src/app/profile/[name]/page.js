@@ -70,14 +70,15 @@ export default function Page({ params }) {
       const users = await getUsers();
       setUsers(users);
 
-      /* Haluu olla retu eikä toimi
+
+      /*
       const getCachedUser = unstable_cache(
-        async (name) => getUser(name),
-        getRandomInt(10000),
-        {revalidate: 1}
+        async () => getUser('moi'),
+        ['my-app-user'],
+        {revalidate: 10}
       );
     
-      const user = await getCachedUser(name);
+      const user = await getCachedUser();
       */
 
       const user = await getUser(name);
@@ -129,16 +130,15 @@ export default function Page({ params }) {
     return skele;
   }
 
-  console.log(view);
   if (view == "ranking") {
     return (
       <>
-        <div className="m-10 flex h-screen flex-col items-center gap-20 bg-white">
+        <div className="m-10 flex flex-col items-center gap-20 bg-white">
           <div className="w-full bg-blue-200">
             <Nav name={userData.name} />
           </div>
-          <div>
-            <Leaderboard id={userData.id} />
+          <div className="h-">
+            <Leaderboard id={userData.id} pageUser={userData} />
           </div>
         </div>
       </>
@@ -147,7 +147,7 @@ export default function Page({ params }) {
 
   return (
     <>
-      <div className="m-10 flex h-screen flex-col items-center bg-white">
+      <div className="m-10 flex flex-col items-center bg-white">
         <div className="w-full bg-blue-200">
           <Nav name={userData.name} />
         </div>
