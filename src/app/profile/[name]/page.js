@@ -10,6 +10,7 @@ import AnimeRadarChart from "./Chart.js";
 import BaseData from "./BaseData.js";
 import Nav from "./Nav.js";
 import Leaderboard from "./Leaderboard.js";
+import CompareButton from "./CompareButton.js";
 
 import { getAniList, findPositionBinary } from "@/lib/lib";
 import {
@@ -157,6 +158,8 @@ export default function Page({ params }) {
           <AnimeRadarChart genres={userData.genres} />
         </div>
         {findPositionBinary(users, userData.anime_minutesWatched)}
+      </div>
+      <div className="">
       </div>
     </>
   );

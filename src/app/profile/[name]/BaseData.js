@@ -14,9 +14,9 @@ export default function BaseData({ userData }) {
           />
         </div>
         <div>
-          <h1 className="text-3xl">{userData.name}</h1>
+          <h1 className="text-2xl">{userData.name}</h1>
         </div>
-        <div className="text-2xl">
+        <div className="">
           <div className="flex gap-10 justify-between">
             <span>Anime</span>
             <span className="text-secondary-color">{userData.anime_count}</span>

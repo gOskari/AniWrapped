@@ -115,6 +115,12 @@ const AnimeRadarChart = (genres) => {
         backgroundColor: "rgba(255,255,255, 0.5)",
         borderWidth: 3,
       },
+      {
+        label: "Average User",
+        data: [100, 60, 130, 95, 150],
+        backgroundColor: "rgba(255,255,255, 0.5)",
+        borderWidth: 3,
+      },
     ],
   };
 

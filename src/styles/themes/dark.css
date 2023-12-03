@@ -1,7 +1,7 @@
 html[data-theme="dark"] {
     --bg-color: #262626;
     --primary-color: #373737;
-    --secondary-color: #aaaaab;
-    --secondary-color-dark: #dfe0e1;
+    --secondary-color: #dadada;
+    --secondary-color-dark: #808080;
 }
 
