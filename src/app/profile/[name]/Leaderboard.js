@@ -1,19 +1,25 @@
-import Link from "next/link";
-import { unstable_cache } from "next/cache";
+"use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
-import { useState, useEffect } from "react";
-import { request, gql } from "graphql-request";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql,
+} from "@apollo/client";
 
-const Leaderboard = ({ id }) => {
-  const [users, setUsers] = useState();
-  const router = useRouter();
 
-  useEffect(() => {
-    const gettaa = async (id) => {
-      console.log(getFollowing(id));
+// revalidatio ei toimi ehk
+const client = new ApolloClient({
+  uri: "https://graphql.anilist.co",
+  cache: new InMemoryCache(),
+  fetchOptions: {
+    next: { revalidate: 5 },
+  },
+});
 
+<<<<<<< HEAD
       /*
       const getCachedUser = unstable_cache(
         async (id) => getFollowing(id),
@@ -63,9 +69,12 @@ const Leaderboard = ({ id }) => {
 
 const getFollowing = async (param) => {
   console.log(param);
+=======
+const Leaderboard = ({ id, pageUser }) => {
+>>>>>>> 31f7b31fc70f71aef8e9f2d73ebb87fd478e2fe2
   const query = gql`
     query ($param: Int!) {
-      Page(page: 1, perPage: 20) {
+      Page(page: 1, perPage: 50) {
         following(userId: $param, sort: WATCHED_TIME_DESC) {
           id
           name
@@ -82,17 +91,81 @@ const getFollowing = async (param) => {
     }
   `;
 
-  const res = await request("https://graphql.anilist.co", query, {
-    param: param,
+  const { loading, error, data } = useQuery(query, {
+    client,
+    variables: { param: id },
   });
 
-  if (!res) {
-    return null;
+  if (!data) {
+    return <>No following...</>;
   }
 
-  console.log(res);
+  let users = data.Page.following;
 
-  return res.Page.following;
+  const addUser = {
+    id: pageUser.id,
+    name: pageUser.name,
+    avatar: {
+      medium: pageUser.avatar,
+    },
+    statistics: {
+      anime: {
+        minutesWatched: pageUser.anime_minutesWatched,
+      },
+    },
+  };
+
+  users = users.concat(addUser);
+
+  users = users.sort(
+    (a, b) =>
+      b.statistics.anime.minutesWatched - a.statistics.anime.minutesWatched
+  );
+
+  if (loading) {
+    return <>Loading...</>;
+  }
+
+  return (
+    <>
+      <ol>
+        {users.map((user) =>
+          user.id == pageUser.id ? (
+            <li
+              key={user.id}
+              className="sticky bottom-0 top-0 flex gap-20 bg-slate-500"
+            >
+              <Image
+                src={user.avatar.medium}
+                alt="User Avatar"
+                height="100"
+                width="100"
+                className="rounded-full"
+              />
+              <div>{user.name}</div>
+              <div>
+                {Math.round(user.statistics.anime.minutesWatched / 60)} Hours
+              </div>
+            </li>
+          ) : (
+            <li key={user.id} className="flex gap-20">
+              <Image
+                src={user.avatar.medium}
+                alt="User Avatar"
+                height="100"
+                width="100"
+                className="rounded-full"
+              />
+              <div>{user.name}</div>
+              <div>
+                {Math.round(user.statistics.anime.minutesWatched / 60)} Hours
+              </div>
+            </li>
+          )
+        )}
+      </ol>
+    </>
+  );
 };
 
 export default Leaderboard;

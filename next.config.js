@@ -7,7 +7,7 @@ module.exports = {
           protocol: 'https',
           hostname: 's4.anilist.co',
           port: '',
-          pathname: '/file/anilistcdn/user/avatar/**'
+          pathname: '/file/anilistcdn/**'
         }
       ]
     }
