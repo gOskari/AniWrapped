@@ -57,43 +57,18 @@ const options = {
 };
 
 const AnimeRadarChart = (genres) => {
-  const { resolvedTheme } = useTheme();
-  const chartRef = useRef(null);
-
-  // Function to read the CSS variables for the current theme
-  const getCssVariables = () => {
-    const rootStyle = getComputedStyle(document.documentElement);
-    return {
-      bgColor: rootStyle.getPropertyValue('--bg-color').trim(),
-      primaryColor: rootStyle.getPropertyValue('--primary-color').trim(),
-      secondaryColor: rootStyle.getPropertyValue('--secondary-color').trim(),
-      secondaryColorDark: rootStyle.getPropertyValue('--secondary-color-dark').trim(),
-    };
+    
+const datasetColors = {
+    genresWatched: {
+      backgroundColor: 'rgba(63, 81, 181, 0.5)',
+      borderColor: 'rgb(63, 81, 181)', 
+    },
+    averageUser: {
+      backgroundColor: 'rgba(0, 150, 136, 0.5)', 
+      borderColor: 'rgb(0, 150, 136)', 
+    },
   };
 
-  const updateChartTheme = () => {
-    const chart = chartRef.current;
-    const cssVars = getCssVariables();
-
-    if (chart) {
-      chart.options.scales.r.angleLines.color = cssVars.secondaryColor;
-      chart.options.scales.r.gridLines.color = cssVars.secondaryColor;
-      chart.options.scales.r.pointLabels.color = cssVars.secondaryColorDark;
-      chart.options.plugins.legend.labels.color = cssVars.secondaryColor;
-      
-      chart.data.datasets.forEach(dataset => {
-        dataset.backgroundColor = cssVars.primaryColor;
-        dataset.borderColor = cssVars.secondaryColor;
-      });
-
-      chart.update();
-    }
-  };
-
-  useEffect(() => {
-    updateChartTheme();
-  }, [resolvedTheme]);
-  
   genres = genres.genres;
 
   const sortedGenres = genres.sort((a, b) => b.count - a.count);
@@ -112,19 +87,23 @@ const AnimeRadarChart = (genres) => {
       {
         label: "Genres Watched",
         data: [a.count, b.count, c.count, d.count, e.count],
-        backgroundColor: "rgba(255,255,255, 0.5)",
+        backgroundColor: datasetColors.genresWatched.backgroundColor,
+        borderColor: datasetColors.genresWatched.borderColor,
         borderWidth: 3,
+        pointBackgroundColor: datasetColors.genresWatched.borderColor, // Points color
       },
       {
         label: "Average User",
         data: [100, 60, 130, 95, 150],
-        backgroundColor: "rgba(255,255,255, 0.5)",
+        backgroundColor: datasetColors.averageUser.backgroundColor,
+        borderColor: datasetColors.averageUser.borderColor,
         borderWidth: 3,
+        pointBackgroundColor: datasetColors.averageUser.borderColor, // Points color
       },
     ],
   };
 
-  return <Radar ref={chartRef} data={data} options={options} />;
+  return <Radar data={data} options={options} />;
 };
 
 export default AnimeRadarChart;

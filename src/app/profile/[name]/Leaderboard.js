@@ -37,17 +37,20 @@ const Leaderboard = ({ id }) => {
 
   return (
     <>
-      <ul>
+      <ul className="mx-auto max-w-2xl space-y-6">
         {users.map((user) => (
-          <li key={user.id} className="flex gap-20">
+          <li
+            key={user.id}
+            className="my-3 flex items-center justify-between rounded-lg bg-red-500 w-96 px-6 py-4 shadow-md"
+          >
             <Image
               src={user.avatar.medium}
               alt="User Avatar"
-              height="100"
-              width="100"
+              height="50"
+              width="50"
               className="rounded-full"
             />
-            <div>{user.name}</div>
+            <div className="ml-4 flex-1">{user.name}</div>
             <div>
               {Math.round(user.statistics.anime.minutesWatched / 60)} Hours
             </div>

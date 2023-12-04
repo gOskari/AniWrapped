@@ -27,7 +27,7 @@ const Nav = ({ name }) => {
 
   return (
     <>
-      <div className="flex items-center justify-center gap-32 p-5">
+      <div className="flex items-center justify-center gap-32 p-5 bg-black">
         <Link
           href={`/profile/${name}`}
           scroll={false}
