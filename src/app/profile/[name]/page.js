@@ -11,6 +11,7 @@ import BaseData from "./BaseData.js";
 import Nav from "./Nav.js";
 import Leaderboard from "./Leaderboard.js";
 import CompareButton from "./CompareButton.js";
+import CompareStats from "./CompareStats.js";
 
 import { getAniList, findPositionBinary } from "@/lib/lib";
 import {
@@ -69,7 +70,6 @@ export default function Page({ params }) {
 
       const users = await getUsers();
       setUsers(users);
-
 
       /*
       const getCachedUser = unstable_cache(
@@ -145,6 +145,8 @@ export default function Page({ params }) {
     );
   }
 
+  console.log(userData.id)
+
   return (
     <>
       <div className="m-10 flex flex-col items-center bg-white">
@@ -158,9 +160,9 @@ export default function Page({ params }) {
           <AnimeRadarChart genres={userData.genres} />
         </div>
         {findPositionBinary(users, userData.anime_minutesWatched)}
+        <CompareStats id1={userData.id} id2={128119}/>
       </div>
-      <div className="">
-      </div>
+      <div className=""></div>
     </>
   );
 }

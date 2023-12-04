@@ -81,7 +81,7 @@ const Leaderboard = ({ id, pageUser }) => {
           user.id == pageUser.id ? (
             <li
               key={user.id}
-              className="sticky bottom-0 flex gap-20 bg-slate-500"
+              className="sticky bottom-0 top-0 flex gap-20 bg-slate-500"
             >
               <Image
                 src={user.avatar.medium}
