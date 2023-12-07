@@ -50,7 +50,7 @@ const options = {
   plugins: {
     legend: {
       labels: {
-        boxWidth: 0,
+        boxWidth: 10,
       },
     },
   },

@@ -71,16 +71,6 @@ export default function Page({ params }) {
       const users = await getUsers();
       setUsers(users);
 
-      /*
-      const getCachedUser = unstable_cache(
-        async () => getUser('moi'),
-        ['my-app-user'],
-        {revalidate: 10}
-      );
-    
-      const user = await getCachedUser();
-      */
-
       const user = await getUser(name);
 
       if (user) {
@@ -151,10 +141,10 @@ export default function Page({ params }) {
     <>
       <div className="m-10 flex flex-col items-center bg-white">
         <div className="w-full bg-blue-200">
-          <Nav name={userData.name} />
+          <Nav name={name} />
         </div>
         <div className="w-full bg-red-100">
-          <BaseData userData={userData} />
+          <BaseData name={name} />
         </div>
         <div className="h-96 w-4/5 p-10">
           <AnimeRadarChart genres={userData.genres} />
