@@ -19,7 +19,8 @@ const client = new ApolloClient({
   },
 });
 
-const Leaderboard = ({ id, pageUser }) => {
+const Leaderboard = ({ user }) => {
+
   const query = gql`
     query ($param: Int!) {
       Page(page: 1, perPage: 50) {
@@ -41,7 +42,7 @@ const Leaderboard = ({ id, pageUser }) => {
 
   const { loading, error, data } = useQuery(query, {
     client,
-    variables: { param: id },
+    variables: { param: user.id },
   });
 
   if (!data) {
@@ -51,14 +52,14 @@ const Leaderboard = ({ id, pageUser }) => {
   let users = data.Page.following;
 
   const addUser = {
-    id: pageUser.id,
-    name: pageUser.name,
+    id: user.id,
+    name: user.name,
     avatar: {
-      medium: pageUser.avatar,
+      medium: user.avatar.medium,
     },
     statistics: {
       anime: {
-        minutesWatched: pageUser.anime_minutesWatched,
+        minutesWatched: user.statistics.anime.minutesWatched,
       },
     },
   };

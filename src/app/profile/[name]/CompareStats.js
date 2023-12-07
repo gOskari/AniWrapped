@@ -1,3 +1,4 @@
+"use client"
 import { FaCheck, FaPlay, FaCalendar } from "react-icons/fa"; // Import icons from a popular icon library
 
 import {
