@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { Menu } from '@headlessui/react'
 
 import {
   ApolloClient,
@@ -19,59 +20,7 @@ const client = new ApolloClient({
   },
 });
 
-<<<<<<< HEAD
-      /*
-      const getCachedUser = unstable_cache(
-        async (id) => getFollowing(id),
-        ['my-app-user']
-      );
-    
-      const users = getCachedUser(id);
-      */
-
-      const users = await getFollowing(id);
-      setUsers(await users);
-    };
-    gettaa(id);
-  }, []);
-
-  if (!users) {
-    return <>No users...</>;
-  }
-
-  console.log(users);
-
-  return (
-    <>
-      <ul className="mx-auto max-w-2xl space-y-6">
-        {users.map((user) => (
-          <li
-            key={user.id}
-            className="my-3 flex items-center justify-between rounded-lg bg-red-500 w-96 px-6 py-4 shadow-md"
-          >
-            <Image
-              src={user.avatar.medium}
-              alt="User Avatar"
-              height="50"
-              width="50"
-              className="rounded-full"
-            />
-            <div className="ml-4 flex-1">{user.name}</div>
-            <div>
-              {Math.round(user.statistics.anime.minutesWatched / 60)} Hours
-            </div>
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-};
-
-const getFollowing = async (param) => {
-  console.log(param);
-=======
 const Leaderboard = ({ id, pageUser }) => {
->>>>>>> 31f7b31fc70f71aef8e9f2d73ebb87fd478e2fe2
   const query = gql`
     query ($param: Int!) {
       Page(page: 1, perPage: 50) {
@@ -126,44 +75,67 @@ const Leaderboard = ({ id, pageUser }) => {
     return <>Loading...</>;
   }
 
+  function DropDownMenu() {
+    return (
+      <Menu as="div" className="relative inline-block text-left">
+      <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-black bg-red-500 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+        Filter
+      </Menu.Button>
+      <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Item>
+          {({ active }) => (
+            <a
+              className={`${
+                active ? 'bg-gray-100' : ''
+              } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+              href="idkyet"
+            >
+              Hours Watched
+            </a>
+          )}
+        </Menu.Item>
+        <Menu.Item>
+          {({ active }) => (
+            <a
+              className={`${
+                active ? 'bg-gray-100' : ''
+              } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+              href="idkyet"
+            >
+              Something else prob
+            </a>
+          )}
+        </Menu.Item>
+      </Menu.Items>
+    </Menu>
+    )
+  }
+
   return (
     <>
-      <ol>
-        {users.map((user) =>
-          user.id == pageUser.id ? (
+      <div className="relative">
+        <DropDownMenu className="absolute right-5"/>
+        <ul className="mx-auto max-w-2xl space-y-6">
+          {users.map((user) => (
             <li
               key={user.id}
-              className="sticky bottom-0 top-0 flex gap-20 bg-slate-500"
+              className="my-3 flex items-center justify-between rounded-lg bg-red-500 w-96 px-6 py-4 shadow-md"
             >
               <Image
                 src={user.avatar.medium}
                 alt="User Avatar"
-                height="100"
-                width="100"
+                height="50"
+                width="50"
                 className="rounded-full"
               />
-              <div>{user.name}</div>
+              <div className="ml-4 flex-1">{user.name}</div>
               <div>
                 {Math.round(user.statistics.anime.minutesWatched / 60)} Hours
               </div>
             </li>
-          ) : (
-            <li key={user.id} className="flex gap-20">
-              <Image
-                src={user.avatar.medium}
-                alt="User Avatar"
-                height="100"
-                width="100"
-                className="rounded-full"
-              />
-              <div>{user.name}</div>
-              <div>
-                {Math.round(user.statistics.anime.minutesWatched / 60)} Hours
-              </div>
-            </li>
-          )
-        )}
-      </ol>
+          ))}
+        </ul>
+        </div>
     </>
   );
 };
