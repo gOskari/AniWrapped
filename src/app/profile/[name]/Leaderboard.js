@@ -80,8 +80,7 @@ const Leaderboard = ({ id, pageUser }) => {
         <Menu.Button className="inline-flex w-full justify-center rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
           Filter
         </Menu.Button>
-        <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <Menu.Item>
+        <Menu.Items className="absolute left z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">          <Menu.Item>
             {({ active }) => (
               <a
                 className={`${

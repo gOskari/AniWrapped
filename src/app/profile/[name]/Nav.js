@@ -44,6 +44,14 @@ const Nav = ({ name }) => {
         >
           Leaderboard
         </Link>
+        <Link
+          href={`/profile/${name}?view=compare`}
+          scroll={false}
+          shallow={true}
+          className="text-2xl text-secondary-color hover:text-bg-color"
+        >
+          Compare
+        </Link>
       </div>
     </>
   );

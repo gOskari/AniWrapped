@@ -123,12 +123,27 @@ export default function Page({ params }) {
   if (view == "ranking") {
     return (
       <>
-        <div className="m-10 flex flex-col items-center gap-20 bg-white">
-          <div className="w-full bg-blue-200">
+        <div className="m-10 flex flex-col items-center gap-20">
+          <div className="w-full">
             <Nav name={userData.name} />
           </div>
           <div className="h-">
             <Leaderboard id={userData.id} pageUser={userData} />
+          </div>
+        </div>
+      </>
+    );
+  }
+  
+  if (view == "compare") {
+    return (
+      <>
+        <div className="m-10 flex flex-col items-center gap-20">
+          <div className="w-full">
+            <Nav name={userData.name} />
+          </div>
+          <div className="h-">
+          <CompareStats id1={userData.id} id2={128119}/>
           </div>
         </div>
       </>
@@ -139,18 +154,17 @@ export default function Page({ params }) {
 
   return (
     <>
-      <div className="m-10 flex flex-col items-center bg-white">
-        <div className="w-full bg-blue-200">
+      <div className="m-10 flex flex-col items-center">
+        <div className="w-full">
           <Nav name={name} />
         </div>
-        <div className="w-full bg-red-100">
+        <div className="w-full mt-10">
           <BaseData name={name} />
         </div>
         <div className="h-96 w-4/5 p-10">
           <AnimeRadarChart genres={userData.genres} />
         </div>
         {findPositionBinary(users, userData.anime_minutesWatched)}
-        <CompareStats id1={userData.id} id2={128119}/>
       </div>
       <div className=""></div>
     </>
