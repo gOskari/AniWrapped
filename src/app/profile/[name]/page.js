@@ -24,7 +24,7 @@ export default function Page({ params }) {
           <div className="w-full">
             <Nav name={name} />
           </div>
-          <div className="h-">
+          <div className="w-full flex justify-center items-center">
             <FetchHook name={name}/>
           </div>
         </div>

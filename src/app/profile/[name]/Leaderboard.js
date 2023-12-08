@@ -121,13 +121,13 @@ const Leaderboard = ({ user }) => {
 
   return (
     <>
-      <div className="relative">
+      <div className="relative flex flex-col items-center justify-center w-10/12">
         <DropDownMenu className="absolute right-5" />
-        <ul className="mx-auto max-w-2xl space-y-6">
+        <ul className="mx-auto space-y-6 flex flex-col w-full items-center">
           {users.map((user) => (
             <li
               key={user.id}
-              className="my-3 flex w-96 rounded-lg bg-red-500 shadow-md"
+              className="my-3 flex rounded-lg w-full bg-red-500 shadow-md"
             >
               <div className="relative h-14 w-14">
                 <Image

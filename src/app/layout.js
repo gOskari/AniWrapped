@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
             <Navbar />
           </header>
           <main className="flex justify-center">
-            <div className="w-full bg-primary-color sm:w-2/4 sm:mt-10 sm:rounded-t-xl">
+            <div className="w-full bg-primary-color h-screen sm:w-2/4 sm:mt-10 sm:rounded-t-xl">
               {children}
             </div>
           </main>
