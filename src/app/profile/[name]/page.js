@@ -37,17 +37,15 @@ export default function Page({ params }) {
       <>
         <div className="m-10 flex flex-col items-center gap-20">
           <div className="w-full">
-            <Nav name={userData.name} />
+            <Nav name={name} />
           </div>
           <div className="h-">
-          <CompareStats id1={userData.id} id2={128119}/>
+          <CompareStats id1={1} id2={128119}/>
           </div>
         </div>
       </>
     );
   }
-
-  console.log(userData.id)
 
   return (
     <>
@@ -62,7 +60,6 @@ export default function Page({ params }) {
           {/*AnimeRadarChart genres={userData.genres} />*/}
         </div>
         {/*findPositionBinary(users, userData.anime_minutesWatched)*/}
-        <CompareStats id1={1} id2={128119}/>
       </div>
       <div className=""></div>
     </>
