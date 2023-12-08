@@ -12,13 +12,6 @@ const Nav = ({ name }) => {
   const searchParams = useSearchParams();
   const view = searchParams.get("view");
 
-  /*
-  useEffect(() => {
-    // Always do navigations after the first render
-    router.push(`/profile/${name}/?anime`, undefined, { shallow: true });
-  }, []);
-  */
-
   const push = (view) => {
     router.push(`/profile/${name}/?${view}`, undefined, { shallow: true });
   };
@@ -35,12 +28,12 @@ const Nav = ({ name }) => {
   console.log('view', view)
   return (
     <>
-      <div className={`flex items-center justify-center gap-32 p-5`}>
+      <div className={`flex items-center justify-center`}>
         <Link
           href={`/profile/${name}`}
           scroll={false}
           shallow={true}
-          className={`text-2xl text-secondary-color hover:text-bg-color rounded-lg p-4 ${!view ? "bg-bg-color" : ""}`}
+          className={`text-2xl text-secondary-color hover:text-bg-color rounded-lg p-3 ${!view ? "bg-bg-color" : ""}`}
         >
           Profile
         </Link>
@@ -48,7 +41,7 @@ const Nav = ({ name }) => {
           href={`/profile/${name}?view=ranking`}
           scroll={false}
           shallow={true}
-          className={`text-2xl text-secondary-color hover:text-bg-color rounded-lg p-4 ${view === "ranking" ? "bg-bg-color" : ""}`}
+          className={`text-2xl text-secondary-color hover:text-bg-color rounded-lg p-3 ${view === "ranking" ? "bg-bg-color" : ""}`}
         >
           Leaderboard
         </Link>
@@ -56,7 +49,7 @@ const Nav = ({ name }) => {
           href={`/profile/${name}?view=compare`}
           scroll={false}
           shallow={true}
-          className={`text-2xl text-secondary-color hover:text-bg-color rounded-lg p-4 ${view === "compare" ? "bg-bg-color" : ""}`}
+          className={`text-2xl text-secondary-color hover:text-bg-color rounded-lg p-3 ${view === "compare" ? "bg-bg-color" : ""}`}
         >
           Compare
         </Link>

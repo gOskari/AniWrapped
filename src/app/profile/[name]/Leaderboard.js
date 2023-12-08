@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Menu } from "@headlessui/react";
 
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,6 +10,8 @@ import {
   useQuery,
   gql,
 } from "@apollo/client";
+
+
 
 // revalidatio ei toimi ehk
 const client = new ApolloClient({
@@ -18,6 +21,12 @@ const client = new ApolloClient({
     next: { revalidate: 5 },
   },
 });
+
+
+
+//import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+
+//import { gql } from "@apollo/client";
 
 const Leaderboard = ({ user }) => {
 
