@@ -1,18 +1,8 @@
 "use client"
 import { FaCheck, FaPlay, FaCalendar } from "react-icons/fa"; // Import icons from a popular icon library
 
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql,
-} from "@apollo/client";
-
-const client = new ApolloClient({
-  uri: "https://graphql.anilist.co",
-  cache: new InMemoryCache(),
-});
+import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { gql } from "@apollo/client";
 
 export default function CompareStats({ id1, id2 }) {
   const query = gql`
@@ -35,13 +25,11 @@ export default function CompareStats({ id1, id2 }) {
     }
   `;
 
-  const data1 = useQuery(query, {
-    client,
+  const data1 = useSuspenseQuery(query, {
     variables: { id: id1 },
   });
 
-  const data2 = useQuery(query, {
-    client,
+  const data2 = useSuspenseQuery(query, {
     variables: { id: id2 },
   });
 

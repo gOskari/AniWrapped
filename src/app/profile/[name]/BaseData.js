@@ -1,22 +1,8 @@
 "use client";
 import Image from "next/image";
 
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql,
-} from "@apollo/client";
-
-// revalidatio ei toimi ehk
-const client = new ApolloClient({
-  uri: "https://graphql.anilist.co",
-  cache: new InMemoryCache(),
-  fetchOptions: {
-    next: { revalidate: 5 },
-  },
-});
+import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { gql } from "@apollo/client";
 
 export default function BaseData({ name }) {
   const query = gql`
@@ -44,8 +30,7 @@ export default function BaseData({ name }) {
 
   //name = 'moi';
 
-  const { loading, error, data } = useQuery(query, {
-    client,
+  const { loading, error, data } = useSuspenseQuery(query, {
     variables: { name: name },
   });
 
