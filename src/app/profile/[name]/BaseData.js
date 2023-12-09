@@ -51,6 +51,7 @@ export default function BaseData({ name }) {
             alt="User Avatar"
             height="100"
             width="100"
+            sizes="33vw"
             className="rounded-full"
           />
         </div>

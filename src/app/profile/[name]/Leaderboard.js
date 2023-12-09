@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import Image from "next/image";
 import { Menu } from "@headlessui/react";
 
@@ -6,7 +7,6 @@ import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { gql } from "@apollo/client";
 
 const Leaderboard = ({ user }) => {
-
   const query = gql`
     query ($param: Int!) {
       Page(page: 1, perPage: 50) {
@@ -66,7 +66,9 @@ const Leaderboard = ({ user }) => {
         <Menu.Button className="inline-flex w-full justify-center rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
           Filter
         </Menu.Button>
-        <Menu.Items className="absolute left z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">          <Menu.Item>
+        <Menu.Items className="left absolute z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          {" "}
+          <Menu.Item>
             {({ active }) => (
               <a
                 className={`${
@@ -95,32 +97,64 @@ const Leaderboard = ({ user }) => {
     );
   }
 
+  let useri = user;
+
   return (
     <>
-      <div className="relative flex flex-col items-center justify-center w-10/12">
+      <div className="relative flex w-10/12 flex-col items-center justify-center">
         <DropDownMenu className="absolute right-5" />
-        <ul className="mx-auto space-y-6 flex flex-col w-full items-center">
-          {users.map((user) => (
-            <li
-              key={user.id}
-              className="my-3 flex rounded-lg w-full bg-red-500 shadow-md"
-            >
-              <div className="relative h-14 w-14">
-                <Image
-                  src={user.avatar.medium}
-                  alt="User Avatar"
-                  fill={true}
-                  className=""
-                />
-              </div>
-              <div className="flex items-center">
-                <div className="ml-4 flex">{user.name}</div>
-                <div className="absolute right-4">
-                  {Math.round(user.statistics.anime.minutesWatched / 60)} Hours
+        <ul className="mx-auto flex w-full flex-col items-center space-y-6">
+          {users.map((user) =>
+            user.id == useri.id ? (
+              <li
+                key={user.id}
+                className="sticky bottom-2 top-2 my-3 flex w-full rounded-lg bg-slate-200 shadow-md"
+              >
+                <div className="relative h-14 w-14">
+                  <Image
+                    src={user.avatar.medium}
+                    alt="User Avatar"
+                    fill={true}
+                    className="rounded-l-lg"
+                    sizes="33vw"
+                  />
                 </div>
-              </div>
-            </li>
-          ))}
+                <div className="flex items-center">
+                  <Link href={`/profile/${user.name}`} className="ml-4">
+                    {user.name}
+                  </Link>
+                  <div className="absolute right-4">
+                    {Math.round(user.statistics.anime.minutesWatched / 60)}{" "}
+                    Hours
+                  </div>
+                </div>
+              </li>
+            ) : (
+              <li
+                key={user.id}
+                className="my-3 flex w-full rounded-lg bg-red-500 shadow-md"
+              >
+                <div className="relative h-14 w-14">
+                  <Image
+                    src={user.avatar.medium}
+                    alt="User Avatar"
+                    fill={true}
+                    className="rounded-l-lg"
+                    sizes="33vw"
+                  />
+                </div>
+                <div className="flex items-center">
+                  <Link href={`/profile/${user.name}`} className="ml-4">
+                    {user.name}
+                  </Link>
+                  <div className="absolute right-4">
+                    {Math.round(user.statistics.anime.minutesWatched / 60)}{" "}
+                    Hours
+                  </div>
+                </div>
+              </li>
+            )
+          )}
         </ul>
       </div>
     </>

@@ -1,8 +1,12 @@
 "use client";
+import Image from "next/image";
+
 import { FaCheck, FaPlay, FaCalendar } from "react-icons/fa"; // Import icons from a popular icon library
 
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { gql } from "@apollo/client";
+
+import CommonsList from "./CommonsList";
 
 export default function CompareStats({ id1, id2 }) {
   const query = gql`
@@ -20,6 +24,11 @@ export default function CompareStats({ id1, id2 }) {
             format
             averageScore
           }
+        }
+      }
+      User(id: $id) {
+        avatar {
+          large
         }
       }
     }
@@ -43,7 +52,8 @@ export default function CompareStats({ id1, id2 }) {
   const dict1Array = Object.values(dict1);
   const dict2Array = Object.values(dict2);
 
-  const commonValues = [];
+  const commonValues1 = [];
+  const commonValues2 = [];
   const dict1UniqueValues = [];
   const dict2UniqueValues = [];
 
@@ -53,7 +63,8 @@ export default function CompareStats({ id1, id2 }) {
     );
     if (matchingValue) {
       // Common value found
-      commonValues.push(value);
+      commonValues1.push(value);
+      commonValues2.push(matchingValue);
     } else {
       // Unique value in dict1
       dict1UniqueValues.push(value);
@@ -61,6 +72,7 @@ export default function CompareStats({ id1, id2 }) {
   });
 
   dict2Array.forEach((value) => {
+    let value2;
     const matchingValue = dict1Array.find(
       (item) => item.media.id === value.media.id
     );
@@ -75,6 +87,9 @@ export default function CompareStats({ id1, id2 }) {
   console.log("Dict1 Unique Values:", dict1UniqueValues);
   console.log("Dict2 Unique Values:", dict2UniqueValues);
   */
+  //console.log(commonValues);
+
+  console.log("commonValues1", commonValues1);
 
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -82,83 +97,56 @@ export default function CompareStats({ id1, id2 }) {
 
   return (
     <>
-      <br></br>
-      COMMON
-      <br></br>
-      <ol className="space-y-1">
-        {commonValues.map((item, index) => (
-          <li
-            key={index}
-            className="flex w-2/4 flex-col items-center justify-start rounded-xl bg-bg-color px-2 py-1"
-          >
-            <div>
-              {/* Fixed width for the title and truncate to handle overflow */}
-              <div className="w-full">{item.media.title.english}</div>
-            </div>
-
-            {/* Fixed width for the checkmarks to align them */}
-            <div className="flex gap-10">
-              <div className="flex flex-start w-8 justify-center rounded-xl bg-primary-color">
-                {item.status === "COMPLETED" && (
-                  <FaCheck className="text-green-500" />
-                )}
-                {item.status === "CURRENT" && (
-                  <FaPlay className="text-blue-500" />
-                )}
-                {item.status === "PLANNING" && (
-                  <FaCalendar className="text-yellow-500" />
-                )}
-              </div>
-
-              {/* Flexible space for scores but with some margin */}
-              <div className="mx-2 flex-1 rounded-xl bg-primary-color text-center">
-                {item.score}
-              </div>
-              <div className="mx-2 flex-1 rounded-xl bg-primary-color text-center">
-                {item.media.averageScore}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <br></br>
-      UNIQUE 1<br></br>
-      <ol>
-        {dict1UniqueValues.map((item) => (
-          <li
-            key={getRandomInt(1000000)}
-            className="flex justify-between gap-5"
-          >
-            <div>{item.media.title.english}</div>
-            <div>
-              {item.status === "COMPLETED" && <FaCheck />}
-              {item.status === "CURRENT" && <FaPlay />}
-              {item.status === "PLANNING" && <FaCalendar />}
-            </div>
-            <div>{item.score}</div>
-            <div>{item.media.averageScore}</div>
-          </li>
-        ))}
-      </ol>
-      <br></br>
-      UNIQUE 2<br></br>
-      <ol>
-        {dict2UniqueValues.map((item) => (
-          <li
-            key={getRandomInt(1000000)}
-            className="flex justify-between gap-5"
-          >
-            <div>{item.media.title.english}</div>
-            <div>
-              {item.status === "COMPLETED" && <FaCheck />}
-              {item.status === "CURRENT" && <FaPlay />}
-              {item.status === "PLANNING" && <FaCalendar />}
-            </div>
-            <div>{item.score}</div>
-            <div>{item.media.averageScore}</div>
-          </li>
-        ))}
-      </ol>
+      <div className="flex justify-center gap-2">
+        <div>
+          <div className="flex justify-center">
+            <Image
+              src={data1.data.User.avatar.large}
+              alt="User Avatar"
+              height="50"
+              width="50"
+              className="rounded-full bg-bg-color"
+            />
+          </div>
+          <CommonsList commonValues={commonValues1} />
+        </div>
+        <div>
+          <div className="flex justify-center">
+            <Image
+              src={data2.data.User.avatar.large}
+              alt="User Avatar"
+              height="50"
+              width="50"
+              className="rounded-full bg-bg-color"
+            />
+          </div>
+          <CommonsList commonValues={commonValues2} />
+        </div>
+      </div>
+      <div>
+        <div className="flex justify-center">
+          <Image
+            src={data1.data.User.avatar.large}
+            alt="User Avatar"
+            height="50"
+            width="50"
+            className="rounded-full bg-bg-color"
+          />
+        </div>
+        <CommonsList commonValues={dict1UniqueValues} />
+      </div>
+      <div>
+        <div className="flex justify-center">
+          <Image
+            src={data2.data.User.avatar.large}
+            alt="User Avatar"
+            height="50"
+            width="50"
+            className="rounded-full bg-bg-color"
+          />
+        </div>
+        <CommonsList commonValues={dict2UniqueValues} />
+      </div>
     </>
   );
 }
