@@ -99,16 +99,20 @@ const Leaderboard = ({ user }) => {
 
   let useri = user;
 
+  const userRank = users.findIndex((u) => u.id === useri.id) + 1;
+
   return (
     <>
       <div className="relative flex w-10/12 flex-col items-center justify-center">
-        <DropDownMenu className="absolute right-5" />
+        {/*<DropDownMenu className="absolute right-5" />*/}
+        <h1  className="mb-5 text-2xl font-semibold shadow-lg border-bg-color">Friend leaderboard based on hours</h1>
+        <p className="mb-5 text-lg text-secondary-color-dark font-semibold">Your position: {userRank}</p>
         <ul className="mx-auto flex w-full flex-col items-center space-y-6">
           {users.map((user) =>
             user.id == useri.id ? (
               <li
                 key={user.id}
-                className="sticky bottom-2 top-2 my-3 flex w-full rounded-lg bg-slate-200 shadow-md"
+                className="sticky bottom-2 top-2 my-3 flex w-full rounded-lg bg-secondary-color-dark shadow-md"
               >
                 <div className="relative h-14 w-14">
                   <Image
@@ -132,7 +136,7 @@ const Leaderboard = ({ user }) => {
             ) : (
               <li
                 key={user.id}
-                className="my-3 flex w-full rounded-lg bg-red-500 shadow-md"
+                className="my-3 flex w-full rounded-lg bg-bg-color shadow-md"
               >
                 <div className="relative h-14 w-14">
                   <Image

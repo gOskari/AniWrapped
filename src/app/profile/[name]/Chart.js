@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import {
   Chart as ChartJS,
@@ -28,7 +28,7 @@ ChartJS.register(
 
 const options = {
   responsive: true,
-  maintainAspectRatio: false,
+  maintainAspectRatio: true,
   scales: {
     r: {
       angleLines: {
@@ -101,12 +101,12 @@ export default function AnimeRadarChart(genres) {
 
   const datasetColors = {
     genresWatched: {
-      backgroundColor: "rgba(63, 81, 181, 0.5)",
-      borderColor: "rgb(63, 81, 181)",
+      backgroundColor: "rgba(233, 30, 99, 0.5)", // A shade of pink for a soft contrast
+      borderColor: "rgb(233, 30, 99)", // A solid pink for the border
     },
     averageUser: {
-      backgroundColor: "rgba(0, 150, 136, 0.5)",
-      borderColor: "rgb(0, 150, 136)",
+      backgroundColor: "rgba(103, 58, 183, 0.5)", // A shade of deep purple for blending in
+      borderColor: "rgb(103, 58, 183)", // A solid deep purple for the border
     },
   };
 
@@ -144,5 +144,11 @@ export default function AnimeRadarChart(genres) {
     ],
   };
 
-  return <Radar data={data} options={options} />;
+  return(
+    <div className="flex justify-center">
+    <div className="w-1/2 h-1/2">
+     <Radar data={data} options={options} />
+     </div>
+     </div>
+    );
 }
