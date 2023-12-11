@@ -41,19 +41,23 @@ export default function RootLayout({ children }) {
         className={inter.className + " h-full bg-bg-color text-secondary-color"}
       >
           <Providers>
-            <header className="fixed top-0">
+            <header className="fixed glow-no-bottom top-0">
               <Navbar />
             </header>
+            <div className="flex justify-center sm:mt-10 sm:mb-10 ">
+            <div className="w-full glow-no-bottom sm:w-2/4 sm:rounded-xl">
             <main className="flex justify-center">
-              <div className="w-full bg-primary-color min-h-screen sm:mt-10 sm:w-2/4 sm:rounded-t-xl">
+              <div className="w-full bg-primary-color min-h-screen sm:rounded-t-xl">
               <ApolloWrapper>{children}</ApolloWrapper>
               </div>
             </main>
-            <footer className="mb-0 mt-1 flex justify-center sm:mb-10">
-              <div className="w-full bg-primary-color p-10 sm:w-2/4 sm:rounded-b-xl">
+            <footer className="mb-0 border-transparent border flex justify-center">
+              <div className="w-full bg-primary-color p-10 sm:rounded-b-xl">
                 <Footer />
               </div>
             </footer>
+            </div>
+            </div>
           </Providers>
       </body>
     </html>

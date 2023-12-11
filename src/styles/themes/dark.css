@@ -1,6 +1,6 @@
 html[data-theme="dark"] {
-    --bg-color: #262626;
-    --primary-color: #373737;
+    --bg-color: #0e0e0e;
+    --primary-color: #222222;
     --secondary-color: #dadada;
     --secondary-color-dark: #808080;
 }

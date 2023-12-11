@@ -28,7 +28,7 @@ ChartJS.register(
 
 const options = {
   responsive: true,
-  maintainAspectRatio: true,
+  maintainAspectRatio: false,
   scales: {
     r: {
       angleLines: {

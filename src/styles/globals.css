@@ -11,6 +11,18 @@
   }
 }
 */
+.glow {
+  box-shadow: 0 0 50px #ffffff; 
+}
+
+/* In your CSS file */
+.glow-no-bottom {
+  box-shadow:
+    10px 0 50px -5px rgba(117, 58, 237, 0.6),   /* Right side glow */
+    -10px 0 50px -5px rgba(117, 58, 237, 0.6),  /* Left side glow */
+    0 -10px 50px -5px rgba(117, 58, 237, 0.6);  /* Top side glow */
+}
+
 
 @layer base {
   html {

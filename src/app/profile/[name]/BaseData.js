@@ -70,7 +70,9 @@ export default function BaseData({ name }) {
           </div>
         </div>
       </div>
+      <div className="pt-10">
       <AnimeRadarChart genres={user.statistics.anime.genres} />
+      </div>
     </>
   );
 }
