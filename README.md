@@ -1,34 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Aniwrapped 🎁
+
+Aniwrapped is a next.js application that uses TailwindCSS for styling. 😎
+
+It provides a way for anime watchers to view and compare their statistics based on AniList data. 📊
+
+Users can input their username to retrieve their viewing statistics, compare hours watched with friends, and discover common and unique shows in their viewing history. 😆
+
+
+## Table of contents
+
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [AniList API Integration](#anilist-api-integration)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+First, ensure you have these installed:
+- npm
+- node.js
 
+### Installation
+
+#### Clone the rep
+```bash
+git clone https://github.com/gOskari/aniwrapped.git
+```
+#### Install NPM packages
+```bash
+npm install
+```
+#### Start the dev server
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Home page
+Input your AniList username in the search box to show profile page
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Profile page 
+Displays your avatar, username, hours watched, anime watched and a radar chart of your genres watched versus the average user.
 
-## Learn More
+### Leaderboard page
+See who of your friends have watched the most hours
 
-To learn more about Next.js, take a look at the following resources:
+### Compare page
+Compare what you and your friend have watched in common and what's unique as well as your ratings
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## AniList API integration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Aniwrapped gets user data from the AniList API. For more info see the [AniList API documentation](https://anilist.gitbook.io/anilist-apiv2-docs/)
 
-## Deploy on Vercel
+### Fetching Data
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We use GraphQL queries to get data from AniList. An example query:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+const query = gql`
+    query ($name: String) {
+      User(name: $name) {
+        id
+        name
+        avatar {
+          large
+          medium
+        }
+        statistics {
+          anime {
+            count
+            minutesWatched
+            genres {
+              genre
+              count
+            }
+          }
+        }
+      }
+    }
+  `;
+```
