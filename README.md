@@ -9,7 +9,9 @@ Users can input their username to retrieve their viewing statistics, compare hou
 
 ## Table of contents
 
-[Getting Started](#Getting Started)  
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [AniList API Integration](#anilist-api-integration)
 
 ## Getting Started
 
