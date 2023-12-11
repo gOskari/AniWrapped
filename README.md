@@ -1,8 +1,11 @@
 # Aniwrapped 🎁
 
-Aniwrapped is a next.js application that uses TailwindCSS for styling. 😁
-It provides a way for anime watchers to view and compare their statistics based on AniList data. 🥶
-Users can input their username to retrieve their viewing statistics, compare hours watched with friends, and discover common and unique shows in their viewing history. 😎
+Aniwrapped is a next.js application that uses TailwindCSS for styling. 😎
+
+It provides a way for anime watchers to view and compare their statistics based on AniList data. 📊
+
+Users can input their username to retrieve their viewing statistics, compare hours watched with friends, and discover common and unique shows in their viewing history. 😆
+
 
 ## Table of contents
 
