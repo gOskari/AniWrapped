@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import AnimeRadarChart from "./Chart.js";
 
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { gql } from "@apollo/client";
@@ -38,8 +39,6 @@ export default function BaseData({ name }) {
     return <>No following...</>;
   }
 
-  console.log(data);
-
   const user = data.User;
 
   return (
@@ -71,6 +70,7 @@ export default function BaseData({ name }) {
           </div>
         </div>
       </div>
+      <AnimeRadarChart genres={user.statistics.anime.genres} />
     </>
   );
 }

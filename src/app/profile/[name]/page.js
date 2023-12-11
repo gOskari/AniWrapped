@@ -56,9 +56,6 @@ export default function Page({ params }) {
         <div className="w-full mt-10">
           <BaseData name={name} />
         </div>
-        <div className="h-96 w-4/5 p-10">
-          {/*AnimeRadarChart genres={userData.genres} />*/}
-        </div>
         {/*findPositionBinary(users, userData.anime_minutesWatched)*/}
       </div>
       <div className=""></div>

@@ -1,7 +1,6 @@
 import { FaCheck, FaPlay, FaCalendar } from "react-icons/fa"; // Import icons from a popular icon library
 
 export default function CommonsList({ commonValues }) {
-  console.log("commonValues", commonValues);
   return (
     <>
       <ol className="space-y-2">

@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <nav className="bg-primary-color md:h-screen md:w-20 flex flex-col justify-center">
       {/* Hamburger button for mobile */}
-      <div className="flex items-center align-center bg-primary-color fixed top-4 right-4 md:hidden w-14 h-10">
+      <div className="rounded-lg flex items-center align-center bg-primary-color fixed bottom-8 right-4 md:hidden w-14 h-14">
         <button
           className="flex items-center justify-center w-20 h-20"
           onClick={() => setIsOpen(!isOpen)}
@@ -26,7 +26,7 @@ const Navbar = () => {
       </div>
       {/* Dropdown menu for mobile */}
       <div
-        className={`bg-primary-color fixed top-14 right-4 p-4 flex flex-col justify-center shadow-lg transform origin-bottom`}
+        className={`rounded-lg  bg-primary-color fixed bottom-24 right-4 p-4 flex flex-col justify-center shadow-lg transform origin-bottom`}
         style={{
           transition: "opacity 0.2s",
           opacity: isOpen ? 1 : 0,
