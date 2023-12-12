@@ -145,10 +145,10 @@ export default function AnimeRadarChart(genres) {
   };
 
   return(
-    <div className="flex justify-center">
-    <div className="w-1/2 h-1/2">
-     <Radar data={data} options={options} />
-     </div>
-     </div>
+    <div className="flex justify-center items-center p-4">
+    <div style={{ width: '90vw', maxWidth: '500px', height: '50vh', maxHeight: '500px' }}>
+      <Radar data={data} options={options} />
+    </div>
+  </div>
     );
 }
