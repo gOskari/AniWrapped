@@ -12,6 +12,7 @@ Users can input their username to retrieve their viewing statistics, compare hou
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [AniList API Integration](#anilist-api-integration)
+- [Codebase Overview](#codebase-overview)
 
 ## Getting Started
 
@@ -49,7 +50,7 @@ See who of your friends have watched the most hours
 ### Compare page
 Compare what you and your friend have watched in common and what's unique as well as your ratings
 
-## AniList API integration
+## AniList API Integration
 
 Aniwrapped gets user data from the AniList API. For more info see the [AniList API documentation](https://anilist.gitbook.io/anilist-apiv2-docs/)
 
@@ -81,3 +82,11 @@ const query = gql`
     }
   `;
 ```
+
+## Codebase Overview
+
+#### - 'app/' Contains all components and pages  
+- 'profile/name' Contains 
+#### - 'styles/' contains custom styles for our TailwindCSS setup
+
+##
