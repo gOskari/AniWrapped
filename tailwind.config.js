@@ -13,6 +13,12 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      boxShadow: {
+        'neon': '0 0 15px rgba(217, 119, 6, 0.5)',
+      },
+      backdropFilter: {
+        'blur': 'blur(10px)', // Blurry effect
+      },
       colors: {
         "primary-color": "var(--primary-color)",
         "secondary-color": "var(--secondary-color)",
@@ -26,5 +32,7 @@ module.exports = {
       backgroundColor: ["hover", "focus"],
     },
   },
-  plugins: [require("tailwindcss-debug-screens")],
+  plugins: [
+    require("tailwindcss-debug-screens"),
+  ],
 };

@@ -12,13 +12,12 @@
 }
 */
 
-.glow-no-bottom {
+/*.glow-no-bottom {
   box-shadow:
-    10px 0 75px -5px rgba(117, 58, 237, 0.6),   /* Right side glow */
-    -10px 0 75px -5px rgba(117, 58, 237, 0.6),  /* Left side glow */
-    0 -10px 75px -5px rgba(117, 58, 237, 0.6);  /* Top side glow */
-}
-
+    10px 0 75px -5px rgba(117, 58, 237, 0.6),
+    -10px 0 75px -5px rgba(117, 58, 237, 0.6),
+    0 -10px 75px -5px rgba(117, 58, 237, 0.6); 
+}*/
 
 @layer base {
   html {
