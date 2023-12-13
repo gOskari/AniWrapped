@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useSearchParams } from "next/navigation";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -7,9 +7,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 import AnimeRadarChart from "./Chart.js";
 import BaseData from "./BaseData.js";
 import Nav from "./Nav.js";
-import FetchHook from "./FetchHook.js"
+import FetchHook from "./FetchHook.js";
 import CompareButton from "./CompareButton.js";
 import CompareStats from "./CompareStats.js";
+
+import ErrorBoundary from "../../ErrorBoundary.js"
 
 export default function Page({ params }) {
   const name = params.name;
@@ -24,14 +26,14 @@ export default function Page({ params }) {
           <div className="w-full">
             <Nav name={name} />
           </div>
-          <div className="w-full flex justify-center items-center">
-            <FetchHook name={name}/>
+          <div className="flex w-full items-center justify-center">
+            <FetchHook name={name} />
           </div>
         </div>
       </>
     );
   }
-  
+
   if (view == "compare") {
     return (
       <>
@@ -40,7 +42,7 @@ export default function Page({ params }) {
             <Nav name={name} />
           </div>
           <div className="h-">
-          <CompareStats id1={1} id2={128119}/>
+            <CompareStats id1={1} id2={128119} />
           </div>
         </div>
       </>
@@ -48,17 +50,17 @@ export default function Page({ params }) {
   }
 
   return (
-    <>
+    <ErrorBoundary>
       <div className="m-10 flex flex-col items-center">
         <div className="w-full">
           <Nav name={name} />
         </div>
-        <div className="w-full mt-10">
+        <div className="mt-10 w-full">
           <BaseData name={name} />
         </div>
         {/*findPositionBinary(users, userData.anime_minutesWatched)*/}
       </div>
       <div className=""></div>
-    </>
+    </ErrorBoundary>
   );
 }

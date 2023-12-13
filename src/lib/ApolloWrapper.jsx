@@ -9,6 +9,21 @@ const client = new ApolloClient({
     fetchOptions: { cache: "force-cache" },
   }),
   cache: new InMemoryCache(),
+  onError: ({ graphQLErrors, networkError }) => {
+    console.log('got error.....')
+    if (graphQLErrors) {
+      graphQLErrors.forEach((error) => {
+        console.error("GraphQL Errorr:", error);
+        // Handle GraphQL errors globally, if needed
+      });
+    }
+
+    if (networkError) {
+      console.error("Network Errorr:", networkError);
+      // Handle network errors globally, if needed
+    }
+  },
+  
 });
 
 // Wrap your entire app with the ApolloProvider to make the client available to your components

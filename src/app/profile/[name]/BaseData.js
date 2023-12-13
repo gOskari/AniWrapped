@@ -29,8 +29,7 @@ export default function BaseData({ name }) {
     }
   `;
 
-  //name = 'moi';
-  const router = useRouter(); 
+  const router = useRouter();
 
   const { loading, error, data } = useSuspenseQuery(query, {
     variables: { name: name },
@@ -40,12 +39,18 @@ export default function BaseData({ name }) {
     return <>loading...</>;
   }
 
-  if (!data) {
-    return <>No following...</>;
-  }
-
   if (error) {
-    Router.push("/")
+    console.log('ERROR')
+    // Check if the error is a "Not Found" error
+    if (error.networkError && error.networkError.statusCode === 404) {
+      // Handle the "Not Found" error, for example, redirect to a 404 page
+      router.push('/404');
+    } else {
+      // Handle other errors, you might want to log them for debugging
+      console.error('GraphQL error:', error);
+      // Redirect to the home page or another appropriate page
+      router.push('/');
+    }
   }
 
   const user = data.User;
@@ -69,7 +74,9 @@ export default function BaseData({ name }) {
         <div className="">
           <div className="flex justify-between gap-10">
             <span>Anime</span>
-            <span className="text-secondary-color">{user.statistics.anime.count}</span>
+            <span className="text-secondary-color">
+              {user.statistics.anime.count}
+            </span>
           </div>
           <div className="flex justify-between gap-10">
             <span>Hours</span>
@@ -80,7 +87,7 @@ export default function BaseData({ name }) {
         </div>
       </div>
       <div className="pt-10">
-      <AnimeRadarChart genres={user.statistics.anime.genres} />
+        <AnimeRadarChart genres={user.statistics.anime.genres} />
       </div>
     </>
   );
