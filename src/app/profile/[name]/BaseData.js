@@ -40,16 +40,16 @@ export default function BaseData({ name }) {
   }
 
   if (error) {
-    console.log('ERROR')
+    console.log("ERROR");
     // Check if the error is a "Not Found" error
     if (error.networkError && error.networkError.statusCode === 404) {
       // Handle the "Not Found" error, for example, redirect to a 404 page
-      router.push('/404');
+      router.push("/404");
     } else {
       // Handle other errors, you might want to log them for debugging
-      console.error('GraphQL error:', error);
+      console.error("GraphQL error:", error);
       // Redirect to the home page or another appropriate page
-      router.push('/');
+      router.push("/");
     }
   }
 
@@ -57,37 +57,39 @@ export default function BaseData({ name }) {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-10">
-        <div className="">
-          <Image
-            src={user.avatar.large}
-            alt="User Avatar"
-            height="100"
-            width="100"
-            sizes="33vw"
-            className="rounded-full"
-          />
-        </div>
-        <div>
-          <h1 className="text-2xl">{user.name}</h1>
-        </div>
-        <div className="">
-          <div className="flex justify-between gap-10">
-            <span>Anime</span>
-            <span className="text-secondary-color">
-              {user.statistics.anime.count}
-            </span>
+      <div className="flex flex-col sm:flex-row gap-10">
+        <div className="flex flex-col items-center justify-center gap-10 rounded-xl bg-primary-color p-8">
+          <div className="">
+            <Image
+              src={user.avatar.large}
+              alt="User Avatar"
+              height="100"
+              width="100"
+              sizes="33vw"
+              className="rounded-full"
+            />
           </div>
-          <div className="flex justify-between gap-10">
-            <span>Hours</span>
-            <span className="text-secondary-color">
-              {Math.round(user.statistics.anime.minutesWatched / 60, 2)}
-            </span>
+          <div>
+            <h1 className="text-2xl">{user.name}</h1>
+          </div>
+          <div className="">
+            <div className="flex justify-between gap-10">
+              <span>Anime</span>
+              <span className="text-secondary-color">
+                {user.statistics.anime.count}
+              </span>
+            </div>
+            <div className="flex justify-between gap-10">
+              <span>Hours</span>
+              <span className="text-secondary-color">
+                {Math.round(user.statistics.anime.minutesWatched / 60, 2)}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="pt-10">
-        <AnimeRadarChart genres={user.statistics.anime.genres} />
+        <div className="bg-primary-color rounded-xl">
+          <AnimeRadarChart genres={user.statistics.anime.genres} />
+        </div>
       </div>
     </>
   );

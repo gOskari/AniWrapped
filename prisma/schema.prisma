@@ -11,28 +11,40 @@ datasource db {
 }
 
 model User {
-  id                   Int    @id @default(autoincrement())
-  name                 String
-  updatedAt            DateTime
-  anime_minutesWatched Int
-  standardDeviation    Int
+  id         Int         @id @default(autoincrement())
+  name       String
+  updatedAt  DateTime
+  avatar     Avatar?
+  statistics Statistics?
 }
 
-model PageUser {
-  id                   Int      @id @default(autoincrement())
-  updatedAt            DateTime @default(now())
-  name                 String   @unique
-  avatar               String
-  anime_count          Int
-  anime_minutesWatched Int
-  genres               Genre[]
-}
-
-model Genre {
+model Avatar {
   id     Int    @id @default(autoincrement())
-  genre  String
-  count  Int
-  userId Int // This is a foreign key linking Genre to PageUser
+  medium String
+  userId Int    @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
 
-  user PageUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Statistics {
+  id     Int    @id @default(autoincrement())
+  anime  Anime?
+  manga  Manga?
+  userId Int    @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Anime {
+  id                Int        @id @default(autoincrement())
+  count             Int
+  minutesWatched    Int
+  standardDeviation Float
+  statisticsId      Int        @unique
+  statistics        Statistics @relation(fields: [statisticsId], references: [id])
+}
+
+model Manga {
+  id           Int        @id @default(autoincrement())
+  count        Int
+  statisticsId Int        @unique
+  statistics   Statistics @relation(fields: [statisticsId], references: [id])
 }

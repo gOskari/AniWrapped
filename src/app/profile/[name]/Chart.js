@@ -97,8 +97,6 @@ export default function AnimeRadarChart(genres) {
   */
   genres = genres.genres;
 
-  console.log("genres", genres);
-
   const datasetColors = {
     genresWatched: {
       backgroundColor: "rgba(233, 30, 99, 0.5)", // A shade of pink for a soft contrast

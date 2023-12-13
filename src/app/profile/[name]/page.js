@@ -26,7 +26,7 @@ export default function Page({ params }) {
           <div className="w-full">
             <Nav name={name} />
           </div>
-          <div className="flex w-full items-center justify-center">
+          <div className="flex items-center justify-center bg-primary-color p-8 rounded-xl">
             <FetchHook name={name} />
           </div>
         </div>
@@ -41,7 +41,7 @@ export default function Page({ params }) {
           <div className="w-full">
             <Nav name={name} />
           </div>
-          <div className="h-">
+          <div className="bg-primary-color p-8 rounded-xl">
             <CompareStats id1={1} id2={128119} />
           </div>
         </div>
@@ -51,11 +51,11 @@ export default function Page({ params }) {
 
   return (
     <ErrorBoundary>
-      <div className="m-10 flex flex-col items-center">
+      <div className="m-10 flex flex-col items-center gap-20">
         <div className="w-full">
           <Nav name={name} />
         </div>
-        <div className="mt-10 w-full">
+        <div className="w-full">
           <BaseData name={name} />
         </div>
         {/*findPositionBinary(users, userData.anime_minutesWatched)*/}

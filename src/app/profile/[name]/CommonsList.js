@@ -15,7 +15,7 @@ export default function CommonsList({ commonValues }) {
             </div>
 
             {/* Fixed width for the checkmarks to align them */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 text-secondary-color-dark">
               <div className="flex min-w-[2rem] items-center rounded-lg bg-primary-color px-2">
                 {item.status === "COMPLETED" && (
                   <FaCheck className="text-green-500" />

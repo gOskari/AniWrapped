@@ -88,6 +88,7 @@ const deleteUser = async (name) => {
 };
 
 const createAniListUsers = async () => {
+  console.log("cteayeAnilsitUsers");
   const aniListQuery = async (page, perPage) => {
     const endpoint = "https://graphql.anilist.co";
     const query = gql`
@@ -104,11 +105,17 @@ const createAniListUsers = async () => {
           users {
             name
             updatedAt
+            avatar {
+              medium
+            }
             statistics {
               anime {
                 count
                 minutesWatched
                 standardDeviation
+              }
+              manga {
+                count
               }
             }
           }
@@ -139,7 +146,7 @@ const createAniListUsers = async () => {
 
     if (
       !response.Page.pageInfo.hasNextPage ||
-      response.Page.pageInfo.currentPage == 2
+      response.Page.pageInfo.currentPage == 10
     ) {
       console.log(
         "vika:",
@@ -152,18 +159,52 @@ const createAniListUsers = async () => {
     response.Page.users.forEach(async (user) => {
       console.log("for lööp");
       try {
+        /*
         const creatableUser = {
           name: user.name || "default",
           updatedAt: new Date(user.updatedAt * 1000) || new Date(),
           anime_minutesWatched: user.statistics.anime.minutesWatched || 0,
           standardDeviation: user.statistics.anime.standardDeviation || 0,
         };
+        */
+
+        const createdUser = await prisma.user.create({
+          data: {
+            name: user.name,
+            updatedAt: new Date(user.updatedAt * 1000) || new Date(),
+            avatar: {
+              create: {
+                medium: user.avatar.medium,
+              },
+            },
+            statistics: {
+              create: {
+                anime: {
+                  create: {
+                    count: user.statistics.anime.count || 0,
+                    minutesWatched: user.statistics.anime.minutesWatched || 0,
+                    standardDeviation:
+                      user.statistics.anime.standardDeviation || 0,
+                  },
+                },
+                manga: {
+                  create: {
+                    count: user.statistics.manga.count || 0,
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        /*
 
         const createdUser = await prisma.user.create({
           data: creatableUser,
         });
+        */
 
-        console.log("Created user: ", createdUser.name);
+        console.log("Created user: ", createdUser);
       } catch (e) {
         console.log("createAnilistUsers | Failed to createUser:", e);
       }
@@ -171,11 +212,35 @@ const createAniListUsers = async () => {
   }
 };
 
-const getUsers = async () => {
-  const users = await prisma.User.findMany();
+const getUsers = async ({ page = 1, pageSize = 50 }) => {
+  const offset = (page - 1) * pageSize;
 
-  //console.log(users);
-  console.log("getUsers()");
+  const users = await prisma.user.findMany({
+    take: pageSize,
+    skip: offset,
+    orderBy: {
+      statistics: {
+        anime: {
+          minutesWatched: "desc",
+        }
+      }
+    },
+    include: {
+      avatar: { select: { medium: true } },
+      statistics: {
+        include: {
+          anime: {
+            select: {
+              count: true,
+              minutesWatched: true,
+              standardDeviation: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
   return users;
 };
 

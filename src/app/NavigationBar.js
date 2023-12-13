@@ -11,7 +11,7 @@ const Navbar = () => {
   //navi enemmä integroituna siihe bodyy
 
   return (
-    <nav className="flex flex-col justify-center bg-primary-color md:h-screen md:w-20">
+    <nav className="flex flex-col justify-center md:h-screen md:w-20">
       {/* Hamburger button for mobile */}
       <div className="z-50 align-center fixed bottom-16 right-6 flex h-16 w-16 items-center rounded-lg bg-bg-color shadow-lg md:hidden">
         <button
