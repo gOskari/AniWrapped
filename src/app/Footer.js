@@ -1,9 +1,9 @@
 const Footer = () => {
   return (
     <div className="text-center">
-      <div>
+      <div className="hover:text-gray-700">
         <a
-          href="https://github.com/gOskari"
+          href="https://github.com/gOskari/AniWrapped"
           target="_blank"
           rel="noopener noreferrer"
         >
