@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import AnimeRadarChart from "./Chart.js";
-
+import Router, { useRouter } from "next/navigation";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { gql } from "@apollo/client";
 
@@ -29,12 +29,23 @@ export default function BaseData({ name }) {
     }
   `;
 
+  //name = 'moi';
+  const router = useRouter(); 
+
   const { loading, error, data } = useSuspenseQuery(query, {
     variables: { name: name },
   });
 
+  if (loading) {
+    return <>loading...</>;
+  }
+
   if (!data) {
     return <>No following...</>;
+  }
+
+  if (error) {
+    Router.push("/")
   }
 
   const user = data.User;
