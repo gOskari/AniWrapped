@@ -11,22 +11,22 @@ const Navbar = () => {
   //navi enemmä integroituna siihe bodyy
 
   return (
-    <nav className="bg-primary-color md:h-screen md:w-20 flex flex-col justify-center">
+    <nav className="flex flex-col justify-center bg-primary-color md:h-screen md:w-20">
       {/* Hamburger button for mobile */}
-      <div className="rounded-lg flex items-center align-center bg-primary-color fixed bottom-8 right-4 md:hidden w-14 h-14">
+      <div className="z-50 align-center fixed bottom-16 right-6 flex h-16 w-16 items-center rounded-lg bg-bg-color shadow-lg md:hidden">
         <button
-          className="flex items-center justify-center w-20 h-20"
+          className="flex h-20 w-20 items-center justify-center"
           onClick={() => setIsOpen(!isOpen)}
         >
           <FiMenu
-            size={24}
+            size={34}
             className="text-secondary-color hover:text-bg-color"
           />
         </button>
       </div>
       {/* Dropdown menu for mobile */}
       <div
-        className={`rounded-lg  bg-primary-color fixed bottom-24 right-4 p-4 flex flex-col justify-center shadow-lg transform origin-bottom`}
+        className={`fixed  bottom-32 right-6 flex origin-bottom transform flex-col justify-center bg-bg-color rounded-lg shadow-lg`}
         style={{
           transition: "opacity 0.2s",
           opacity: isOpen ? 1 : 0,
@@ -35,7 +35,7 @@ const Navbar = () => {
       >
         {/* Container for menu items with consistent gap */}
         <div
-          className="flex flex-col"
+          className="flex w-16 flex-col items-center justify-center gap-2 bg-bg-secondary rounded-lg pb-3 pt-3"
           style={{
             transition: "opacity 0.2s",
             opacity: isOpen ? 1 : 0,
@@ -44,18 +44,18 @@ const Navbar = () => {
         >
           <Link
             href="/"
-            className="text-2xl text-secondary-color hover:text-bg-color"
+            className="tb-4 flex items-center justify-center text-2xl text-secondary-color hover:text-bg-color"
           >
-            <FiHome size={24} />
+            <FiHome size={34} />
           </Link>
-          <div className="text-2xl text-secondary-color hover:text-bg-color">
-            <ThemeSwitch />
+          <div className="flex items-center justify-center text-2xl text-secondary-color hover:text-bg-color">
+            <ThemeSwitch size={34} />
           </div>
         </div>
       </div>
 
       {/* PC Navbar */}
-      <div className="hidden md:flex flex-col items-center md:h-screen md:pt-10 md:w-20">
+      <div className="hidden flex-col items-center md:flex md:h-screen md:w-20 md:pt-10">
         <Link
           href="/"
           className="text-2xl text-secondary-color hover:text-bg-color"
@@ -64,7 +64,7 @@ const Navbar = () => {
         </Link>
         {/* Theme switch */}
         <div className="text-2xl text-secondary-color hover:text-bg-color">
-          <ThemeSwitch />
+          <ThemeSwitch size={24} />
         </div>
         {/* Add your other PC menu links here */}
       </div>

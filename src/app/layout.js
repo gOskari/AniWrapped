@@ -41,10 +41,14 @@ export default function RootLayout({ children }) {
       <body
         className={inter.className + " h-full bg-bg-color text-secondary-color"}>
           <Providers>
+<<<<<<< HEAD
             <div className="z-0">
               <GlowingBallsBackground />
             </div>
             <header className="fixed glow-no-bottom top-0">
+=======
+            <header className="fixed glow-no-bottom top-0 z-50">
+>>>>>>> 44652e3a77d0557b710185e6f34ea6a62854bcea
               <Navbar />
             </header>
             <div className="flex justify-center sm:mt-10 sm:mb-10 ">
