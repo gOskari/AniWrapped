@@ -24,7 +24,7 @@ export default function NameForm() {
         />
         <button
           type="submit"
-          className="text-primary-color bg-secondary-color hover:bg-secondary-color-dark focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-r-lg text-sm px-4 py-2 flex items-center justify-center"
+          className="text-primary-color bg-secondary-color hover:bg-secondary-color-dark focus:outline-none focus:ring-gray-300 font-medium rounded-r-lg text-sm px-4 py-2 flex items-center justify-center"
         >
           <svg
             className="w-4 h-4"
