@@ -29,8 +29,6 @@ export default function BaseData({ name }) {
     }
   `;
 
-  //name = 'moi';
-
   const { loading, error, data } = useSuspenseQuery(query, {
     variables: { name: name },
   });

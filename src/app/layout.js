@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
         className={inter.className + " h-full bg-bg-color text-secondary-color"}
       >
           <Providers>
-            <header className="fixed glow-no-bottom top-0">
+            <header className="fixed glow-no-bottom top-0 z-50">
               <Navbar />
             </header>
             <div className="flex justify-center sm:mt-10 sm:mb-10 ">
