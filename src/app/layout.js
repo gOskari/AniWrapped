@@ -39,29 +39,30 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="dark">
       <body
-        className={inter.className + " h-full bg-bg-color text-secondary-color"}>
-          <Providers>
-            <div className="z-0">
-              <GlowingBallsBackground />
+        className={inter.className + " h-full bg-bg-color text-secondary-color"}
+      >
+        <Providers>
+          <div className="z-0">
+            <GlowingBallsBackground />
+          </div>
+          <header className="glow-no-bottom fixed top-0 z-50">
+            <Navbar />
+          </header>
+          <div className="flex justify-center sm:mb-10 sm:mt-10 ">
+            <div className="glow-no-bottom w-full sm:rounded-xl">
+              <main className="flex justify-center">
+                <div className="z-10 min-h-screen w-full sm:w-2/4 sm:rounded-t-xl">
+                  <ApolloWrapper>{children}</ApolloWrapper>
+                </div>
+              </main>
+              <footer className="mb-0 flex justify-center border border-transparent">
+                <div className="z-10 w-full absolute bg-primary-color p-10">
+                  <Footer />
+                </div>
+              </footer>
             </div>
-            <header className="fixed glow-no-bottom top-0 z-50">
-              <Navbar />
-            </header>
-            <div className="flex justify-center sm:mt-10 sm:mb-10 ">
-            <div className="w-full glow-no-bottom sm:w-2/4 sm:rounded-xl">
-            <main className="flex justify-center">
-              <div className="w-full bg-primary-color z-10 min-h-screen sm:rounded-t-xl">
-              <ApolloWrapper>{children}</ApolloWrapper>
-              </div>
-            </main>
-            <footer className="mb-0 border-transparent border flex justify-center">
-              <div className="w-full bg-primary-color p-10 sm:rounded-b-xl">
-                <Footer />
-              </div>
-            </footer>
-            </div>
-            </div>
-          </Providers>
+          </div>
+        </Providers>
       </body>
     </html>
   );

@@ -12,12 +12,15 @@
 }
 */
 
-/*.glow-no-bottom {
-  box-shadow:
-    10px 0 75px -5px rgba(117, 58, 237, 0.6),
-    -10px 0 75px -5px rgba(117, 58, 237, 0.6),
-    0 -10px 75px -5px rgba(117, 58, 237, 0.6); 
-}*/
+.ball {
+  @apply rounded-full; /* Adjust the size as needed */
+  background-image: radial-gradient(circle, rgba(141, 75, 187, 0.8) 0%, rgba(74, 36, 94, 0.6) 50%, rgba(37, 18, 47, 0.4) 100%);
+  box-shadow: 0 0 30px rgba(141, 75, 187, 0.8), /* Inner glow */
+               0 0 60px rgba(141, 75, 187, 0.6), /* Middle glow */
+               0 0 120px rgba(141, 75, 187, 0.4); /* Outer glow */
+  position: fixed;
+}
+
 
 @layer base {
   html {
