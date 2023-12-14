@@ -13,10 +13,12 @@ import { useSearchParams } from "next/navigation";
 
 const Layout = ({ user, users }) => {
   function DropDownMenu() {
+    const searchParams = useSearchParams();
+    const filter = searchParams.get("filter");
     return (
-      <Menu as="div" className="relative inline-block text-left pb-2">
-        <Menu.Button className="inline-flex w-full justify-center rounded-md bg-primary-color px-4 py-2 text-sm font-medium text-secondary-color border border-secondary-color hover:border-secondary-color-dark hover:text-secondary-color-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-          Filter
+      <Menu as="div" className="relative inline-block pb-2 text-left">
+        <Menu.Button className="inline-flex w-full justify-center rounded-md border border-secondary-color bg-primary-color px-4 py-2 text-sm font-medium text-secondary-color hover:border-secondary-color-dark hover:text-secondary-color-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          {filter.charAt(0).toUpperCase() + filter.slice(1)}
         </Menu.Button>
         <Menu.Items className="left absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-primary-color shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {" "}
@@ -25,7 +27,7 @@ const Layout = ({ user, users }) => {
               <Link
                 className={`${
                   active ? "" : ""
-                } group flex w-full items-center bg-primary-color text-secondary-color rounded-md hover:text-secondary-color-dark hover:twe px-2 py-2 text-sm`}
+                } hover:twe group flex w-full items-center rounded-md bg-primary-color px-2 py-2 text-sm text-secondary-color hover:text-secondary-color-dark`}
                 href={`/profile/${user.name}?view=ranking&filter=following`}
               >
                 Following
@@ -37,7 +39,7 @@ const Layout = ({ user, users }) => {
               <Link
                 className={`${
                   active ? "" : ""
-                } group flex w-full items-center bg-primary-color text-secondary-color hover:text-secondary-color-dark rounded-md px-2 py-2 text-sm`}
+                } group flex w-full items-center rounded-md bg-primary-color px-2 py-2 text-sm text-secondary-color hover:text-secondary-color-dark`}
                 href={`/profile/${user.name}?view=ranking&filter=global`}
               >
                 Global
@@ -49,6 +51,9 @@ const Layout = ({ user, users }) => {
     );
   }
 
+  const searchParams = useSearchParams();
+  const filter = searchParams.get("filter");
+
   let useri = user;
 
   const userRank = users.findIndex((u) => u.id === useri.id) + 1;
@@ -57,21 +62,15 @@ const Layout = ({ user, users }) => {
   return (
     <>
       <div className="relative flex flex-col items-center justify-center">
-        <h1 className="mb-5 font-semibold">
-          Leaderboard of followed users | Hours
-        </h1>
-        {/*<DropDownMenu className="absolute right-5" />*/}
-        <p className="mb-5">
-          Rank #{userRank}
-        </p>
-        <ul className="mx-auto flex w-full flex-col items-center space-y-6 bg-primary-color p-8 rounded-xl">
+        <h1 className="mb-5 font-semibold">Leaderboard | Hours</h1>
+        <DropDownMenu className="absolute right-5" />
+        {/*!filter ? <p className="mb-5">Rnk #{userRank}</p> : ""*/}
+        <ul className="mx-auto flex w-full flex-col items-center space-y-6 rounded-xl bg-primary-color p-8">
           {users.map((user) => (
             <li
               key={user.id}
               className={`my-3 flex w-full rounded-lg bg-bg-color shadow-md ${
-                user.id == useri.id
-                  ? "bottom-2 top-2 bg-primary-color"
-                  : ""
+                user.id == useri.id ? "bottom-2 top-2 bg-primary-color" : ""
               }`}
             >
               <div className="relative h-14 w-14">
@@ -84,7 +83,10 @@ const Layout = ({ user, users }) => {
                 />
               </div>
               <div className="flex w-full items-center justify-between pr-4">
-                <Link href={`/profile/${user.name}`} className="ml-4 text-secondary-color hover:text-secondary-color-dark">
+                <Link
+                  href={`/profile/${user.name}`}
+                  className="ml-4 text-secondary-color hover:text-secondary-color-dark"
+                >
                   {user.name}
                 </Link>
                 <div className="text-secondary-color-dark">
@@ -160,11 +162,11 @@ const Global = ({ user }) => {
   const [users, setUsers] = useState();
   const [usersFetched, setUsersFetched] = useState(false);
   const isInitialMount = useRef(true);
-  
+
   useEffect(() => {
     const fetching = async () => {
       const page = 1;
-      const pageSize = 50;
+      const pageSize = 75;
 
       // Check if it's not the initial mount
       if (!isInitialMount.current) {

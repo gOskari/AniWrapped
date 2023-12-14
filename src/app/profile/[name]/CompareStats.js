@@ -152,14 +152,16 @@ export default function CompareStats({ name1, name2 }) {
       <div className="flex justify-center gap-2">
         <div>
           <div className="m-4 flex items-center justify-between rounded-xl bg-primary-color pb-2 pl-4 pr-4 pt-2 text-lg font-bold">
-            <div className="flex items-center">
-              <Image
-                src={user1.avatar.large}
-                alt="User Avatar"
-                height="50"
-                width="50"
-                className="rounded-full bg-bg-color"
-              />
+            <div className="flex items-center gap-3">
+              <div className="relative h-10 w-10">
+                <Image
+                  src={user1.avatar.large}
+                  alt="User Avatar"
+                  fill={true}
+                  className="rounded-full bg-bg-color"
+                  sizes="33vw"
+                />
+              </div>
               <div>{user1.name}</div>
             </div>
             <div className="flex min-w-fit max-w-2xl justify-between gap-2 text-sm font-normal">
@@ -187,14 +189,16 @@ export default function CompareStats({ name1, name2 }) {
         </div>
         <div>
           <div className="m-4 flex items-center justify-between rounded-xl bg-primary-color pb-2 pl-4 pr-4 pt-2 text-lg font-bold">
-            <div className="flex items-center">
-              <Image
-                src={user2.avatar.large}
-                alt="User Avatar"
-                height="50"
-                width="50"
-                className="rounded-full bg-bg-color"
-              />
+            <div className="flex items-center gap-3">
+              <div className="relative h-10 w-10">
+                <Image
+                  src={user2.avatar.large}
+                  alt="User Avatar"
+                  fill={true}
+                  className="rounded-full bg-bg-color"
+                  sizes="33vw"
+                />
+              </div>
               <div>{user2.name}</div>
             </div>
             <div className="flex min-w-fit max-w-2xl justify-between gap-2 text-sm font-normal">

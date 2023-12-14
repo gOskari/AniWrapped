@@ -131,7 +131,6 @@ export default function AnimeRadarChart(genres) {
         borderWidth: 3,
         pointBackgroundColor: datasetColors.genresWatched.borderColor, // Points color
       },
-      /*
       {
         label: "Average User",
         data: [100, 60, 130, 95, 150],
@@ -140,7 +139,6 @@ export default function AnimeRadarChart(genres) {
         borderWidth: 3,
         pointBackgroundColor: datasetColors.averageUser.borderColor, // Points color
       },
-      */
     ],
   };
 

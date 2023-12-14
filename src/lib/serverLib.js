@@ -19,6 +19,7 @@ const createAniListUsers = async () => {
           }
           users {
             name
+            id
             updatedAt
             avatar {
               medium
@@ -65,7 +66,7 @@ const createAniListUsers = async () => {
 
     if (
       !response.Page.pageInfo.hasNextPage ||
-      response.Page.pageInfo.currentPage == 300
+      response.Page.pageInfo.currentPage == 50
     ) {
       console.log(
         "End of pages:",
@@ -80,6 +81,7 @@ const createAniListUsers = async () => {
       try {
         const createdUser = await prisma.user.create({
           data: {
+            id: user.id,
             name: user.name,
             updatedAt: new Date(user.updatedAt * 1000) || new Date(),
             avatar: {
@@ -117,10 +119,6 @@ const createAniListUsers = async () => {
   // Disconnect from the database after processing
   await prisma.$disconnect();
 };
-
-// Invoke the function
-createAniListUsers();
-
 
 const getUsers = async ({ page = 1, pageSize = 50 }) => {
   const offset = (page - 1) * pageSize;
