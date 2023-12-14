@@ -17,7 +17,7 @@ const Nav = ({ name }) => {
           href={`/profile/${name}`}
           scroll={false}
           shallow={true}
-          className={`rounded-lg p-3 text-2xl text-secondary-color hover:text-bg-color ${
+          className={`rounded-lg p-3 text-2xl text-secondary-color hover:text-secondary-color-dark  ${
             !view ? "bg-bg-color" : ""
           }`}
         >
@@ -27,7 +27,7 @@ const Nav = ({ name }) => {
           href={`/profile/${name}?view=ranking`}
           scroll={false}
           shallow={true}
-          className={`rounded-lg p-3 text-2xl text-secondary-color hover:text-bg-color ${
+          className={`rounded-lg p-3 text-2xl text-secondary-color hover:text-secondary-color-dark ${
             view === "ranking" ? "bg-bg-color" : ""
           }`}
         >
@@ -37,7 +37,7 @@ const Nav = ({ name }) => {
           href={`/profile/${name}?view=compare`}
           scroll={false}
           shallow={true}
-          className={`text-2xl text-secondary-color hover:text-bg-color rounded-lg p-3 ${view === "compare" ? "bg-bg-color" : ""}`}
+          className={`text-2xl text-secondary-color hover:text-secondary-color-dark rounded-lg p-3 ${view === "compare" ? "bg-bg-color" : ""}`}
         >
           Compare
         </Link>

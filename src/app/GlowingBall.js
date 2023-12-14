@@ -1,5 +1,15 @@
+"use client"
+
+import { useTheme } from "next-themes";
+
 const GlowingBallsBackground = () => {
-    return (
+  const { resolvedTheme } = useTheme();
+
+  if (resolvedTheme === "light") {
+    return null;
+  }
+
+  return (
       <div className="text-white">
         {/* Background container for glowing balls */}
         <div className="absolute inset-0 overflow-hidden">

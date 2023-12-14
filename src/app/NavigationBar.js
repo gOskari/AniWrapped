@@ -20,7 +20,7 @@ const Navbar = () => {
         >
           <FiMenu
             size={34}
-            className="text-secondary-color hover:text-bg-color"
+            className="text-secondary-color hover:text-secondary-color-dark"
           />
         </button>
       </div>
@@ -44,11 +44,11 @@ const Navbar = () => {
         >
           <Link
             href="/"
-            className="tb-4 flex items-center justify-center text-2xl text-secondary-color hover:text-bg-color"
+            className="tb-4 flex items-center justify-center text-2xl text-secondary-color secondary-color-dark"
           >
             <FiHome size={34} />
           </Link>
-          <div className="flex items-center justify-center text-2xl text-secondary-color hover:text-bg-color">
+          <div className="flex items-center justify-center text-2xl text-secondary-color secondary-color-dark">
             <ThemeSwitch size={34} />
           </div>
         </div>
@@ -58,12 +58,12 @@ const Navbar = () => {
       <div className="hidden flex-col items-center md:flex md:h-screen md:w-20 md:pt-10">
         <Link
           href="/"
-          className="text-2xl text-secondary-color hover:text-bg-color"
+          className="text-2xl text-secondary-color hover:text-secondary-color-dark"
         >
           <FiHome size={24} />
         </Link>
         {/* Theme switch */}
-        <div className="text-2xl text-secondary-color hover:text-bg-color">
+        <div className="text-2xl text-secondary-color hover:text-secondary-color-dark">
           <ThemeSwitch size={24} />
         </div>
         {/* Add your other PC menu links here */}
