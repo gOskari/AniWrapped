@@ -24,7 +24,7 @@ const Nav = ({ name }) => {
           Profile
         </Link>
         <Link
-          href={`/profile/${name}?view=ranking`}
+          href={`/profile/${name}?view=ranking&filter=following`}
           scroll={false}
           shallow={true}
           className={`rounded-lg p-3 text-2xl text-secondary-color hover:text-secondary-color-dark ${
