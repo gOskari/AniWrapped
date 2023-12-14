@@ -51,6 +51,7 @@ export default function Page({ params }) {
     if (!id22 == "") {
       return (
         <>
+        <ErrorBoundary>
           <div className="m-10 flex flex-col items-center gap-20">
             <div className="w-full">
               <Nav name={name} />
@@ -59,6 +60,7 @@ export default function Page({ params }) {
               <CompareStats name1={name} name2={id22} />
             </div>
           </div>
+          </ErrorBoundary>
         </>
       );
     }
