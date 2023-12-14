@@ -14,18 +14,18 @@ import { useSearchParams } from "next/navigation";
 const Layout = ({ user, users }) => {
   function DropDownMenu() {
     return (
-      <Menu as="div" className="relative inline-block text-left">
-        <Menu.Button className="inline-flex w-full justify-center rounded-md bg-bg-color px-4 py-2 text-sm font-medium text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+      <Menu as="div" className="relative inline-block text-left pb-2">
+        <Menu.Button className="inline-flex w-full justify-center rounded-md bg-primary-color px-4 py-2 text-sm font-medium text-secondary-color border border-secondary-color hover:border-secondary-color-dark hover:text-secondary-color-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
           Filter
         </Menu.Button>
-        <Menu.Items className="left absolute z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="left absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-primary-color shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {" "}
           <Menu.Item>
             {({ active }) => (
               <Link
                 className={`${
-                  active ? "bg-gray-100" : ""
-                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                  active ? "" : ""
+                } group flex w-full items-center bg-primary-color text-secondary-color rounded-md hover:text-secondary-color-dark hover:twe px-2 py-2 text-sm`}
                 href={`/profile/${user.name}?view=ranking&filter=following`}
               >
                 Following
@@ -36,8 +36,8 @@ const Layout = ({ user, users }) => {
             {({ active }) => (
               <Link
                 className={`${
-                  active ? "bg-gray-100" : ""
-                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                  active ? "" : ""
+                } group flex w-full items-center bg-primary-color text-secondary-color hover:text-secondary-color-dark rounded-md px-2 py-2 text-sm`}
                 href={`/profile/${user.name}?view=ranking&filter=global`}
               >
                 Global
@@ -57,10 +57,10 @@ const Layout = ({ user, users }) => {
   return (
     <>
       <div className="relative flex w-10/12 flex-col items-center justify-center">
-        <DropDownMenu className="absolute right-5" />
-        <h1 className="mb-5 border-bg-color text-2xl font-semibold shadow-lg">
-          Friend leaderboard based on hours
+        <h1 className="mb-5 border-bg-color text-3xl font-semibold shadow-lg">
+          Leaderboard based on hours
         </h1>
+        <DropDownMenu className="absolute right-5" />
         <p className="mb-5 text-lg font-semibold text-secondary-color-dark">
           Your position: {userRank}
         </p>
@@ -84,7 +84,7 @@ const Layout = ({ user, users }) => {
                 />
               </div>
               <div className="flex items-center">
-                <Link href={`/profile/${user.name}`} className="ml-4">
+                <Link href={`/profile/${user.name}`} className="ml-4 text-secondary-color hover:text-secondary-color-dark">
                   {user.name}
                 </Link>
                 <div className="absolute right-4 text-secondary-color-dark">

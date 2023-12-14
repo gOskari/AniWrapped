@@ -1,4 +1,4 @@
-import { FaCheck, FaPlay, FaCalendar } from "react-icons/fa"; // Import icons from a popular icon library
+import { FaCheck, FaPlay, FaCalendar, FaStar, FaGlobe } from "react-icons/fa"; // Import icons from a popular icon library
 
 export default function CommonsList({ commonValues }) {
   return (
@@ -24,15 +24,17 @@ export default function CommonsList({ commonValues }) {
                   <FaPlay className="text-blue-500" />
                 )}
                 {item.status === "PLANNING" && (
-                  <FaCalendar className="text-yellow-500" />
+                  <FaCalendar className="text-teal-500" />
                 )}
               </div>
 
               {/* Flexible space for scores but with some margin */}
-              <div className="min-w-[5rem] flex-1 rounded-lg bg-primary-color px-2 text-center">
+              <div className="min-w-[5rem] flex items-center justify-center rounded-lg bg-primary-color px-2 text-center">
+                <FaStar className="text-yellow-500 pr-1"/>
                 {item.score}
               </div>
-              <div className="flex-end min-w-[2rem] rounded-lg bg-primary-color px-2 text-center">
+              <div className="flex-end min-w-[5rem] flex items-center justify-center rounded-lg bg-primary-color px-2 text-center">
+                <FaGlobe className="pr-1"/>
                 {item.media.averageScore}
               </div>
             </div>

@@ -1,12 +1,14 @@
 "use client";
 import Image from "next/image";
 
-import { FaCheck, FaPlay, FaCalendar } from "react-icons/fa"; // Import icons from a popular icon library
+import { FaCheck, FaPlay, FaCalendar, FaGlobe, FaStar } from "react-icons/fa"; // Import icons from a popular icon library
 
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { gql } from "@apollo/client";
 
 import CommonsList from "./CommonsList";
+
+import Tooltip from './ToolTip'; 
 
 export default function CompareStats({ id1, id2 }) {
   const query = gql`
@@ -82,6 +84,29 @@ export default function CompareStats({ id1, id2 }) {
     }
   });
 
+  const Legend = () => (
+    <div className="flex justify-center items-center space-x-4 mb-4">
+      <div className="flex items-center space-x-1">
+        <FaCheck className="text-green-500" />
+        <span>Completed</span>
+      </div>
+      <div className="flex items-center space-x-1">
+        <FaPlay className="text-blue-500" />
+        <span>Watching</span>
+      </div>
+      <div className="flex items-center space-x-1">
+        <FaCalendar className="text-teal-500" />
+        <span>Planned</span>
+      </div>
+      <div className="flex items-center space-x-1">
+        <FaStar className="text-yellow-500"/>
+        <span>Your Rating /</span>
+        <FaGlobe/>
+        <span>Global Rating</span>
+      </div>
+    </div>
+  );
+
   /*
   console.log("Common Values:", commonValues);
   console.log("Dict1 Unique Values:", dict1UniqueValues);
@@ -97,6 +122,7 @@ export default function CompareStats({ id1, id2 }) {
 
   return (
     <>
+    <Legend />
       <div className="flex justify-center gap-2">
         <div>
           <div className="flex justify-center">
