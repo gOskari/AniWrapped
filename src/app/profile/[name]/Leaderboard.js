@@ -56,15 +56,15 @@ const Layout = ({ user, users }) => {
 
   return (
     <>
-      <div className="relative flex w-10/12 flex-col items-center justify-center">
-        <h1 className="mb-5 border-bg-color text-3xl font-semibold shadow-lg">
-          Leaderboard based on hours
+      <div className="relative flex flex-col items-center justify-center">
+        <h1 className="mb-5 font-semibold">
+          Leaderboard of followed users | Hours
         </h1>
-        <DropDownMenu className="absolute right-5" />
-        <p className="mb-5 text-lg font-semibold text-secondary-color-dark">
-          Your position: {userRank}
+        {/*<DropDownMenu className="absolute right-5" />*/}
+        <p className="mb-5">
+          Rank #{userRank}
         </p>
-        <ul className="mx-auto flex w-full flex-col items-center space-y-6">
+        <ul className="mx-auto flex w-full flex-col items-center space-y-6 bg-primary-color p-8 rounded-xl">
           {users.map((user) => (
             <li
               key={user.id}
@@ -83,11 +83,11 @@ const Layout = ({ user, users }) => {
                   sizes="33vw"
                 />
               </div>
-              <div className="flex items-center">
+              <div className="flex w-full items-center justify-between pr-4">
                 <Link href={`/profile/${user.name}`} className="ml-4 text-secondary-color hover:text-secondary-color-dark">
                   {user.name}
                 </Link>
-                <div className="absolute right-4 text-secondary-color-dark">
+                <div className="text-secondary-color-dark">
                   {Math.round(user.statistics.anime.minutesWatched / 60)} Hours
                 </div>
               </div>
@@ -160,7 +160,7 @@ const Global = ({ user }) => {
   const [users, setUsers] = useState();
   const [usersFetched, setUsersFetched] = useState(false);
   const isInitialMount = useRef(true);
-
+  
   useEffect(() => {
     const fetching = async () => {
       const page = 1;

@@ -3,11 +3,11 @@ import { FaCheck, FaPlay, FaCalendar, FaStar, FaGlobe } from "react-icons/fa"; /
 export default function CommonsList({ commonValues }) {
   return (
     <>
-      <ol className="space-y-2">
+      <ol className="space-y-2 bg-primary-color p-4 rounded-xl m-4">
         {commonValues.map((item, index) => (
           <li
             key={index}
-            className="flex flex-col items-center justify-start rounded-xl bg-bg-color px-2 py-1"
+            className="flex flex-col justify-start rounded-xl px-2 py-1"
           >
             <div>
               {/* Fixed width for the title and truncate to handle overflow */}
@@ -16,7 +16,7 @@ export default function CommonsList({ commonValues }) {
 
             {/* Fixed width for the checkmarks to align them */}
             <div className="flex gap-2 text-secondary-color-dark">
-              <div className="flex min-w-[2rem] items-center rounded-lg bg-primary-color px-2">
+              <div className="flex min-w-[2rem] items-center rounded-lg px-2">
                 {item.status === "COMPLETED" && (
                   <FaCheck className="text-green-500" />
                 )}

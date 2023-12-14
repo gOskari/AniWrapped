@@ -75,13 +75,13 @@ export default function BaseData({ name }) {
           <div className="">
             <div className="flex justify-between gap-10">
               <span>Anime</span>
-              <span className="text-secondary-color">
+              <span className="text-secondary-color-dark">
                 {user.statistics.anime.count}
               </span>
             </div>
             <div className="flex justify-between gap-10">
               <span>Hours</span>
-              <span className="text-secondary-color">
+              <span className="text-secondary-color-dark">
                 {Math.round(user.statistics.anime.minutesWatched / 60, 2)}
               </span>
             </div>

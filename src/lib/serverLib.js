@@ -1,99 +1,14 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { request, gql } from "graphql-request";
-import { cache } from "react";
-
-const getUser = cache(async (name) => {
-  const user = await prisma.pageUser.findFirst({
-    where: {
-      name: {
-        equals: name,
-        mode: "insensitive",
-      },
-    },
-    include: { genres: true },
-  });
-  if (!user) {
-    console.log("User not found.");
-    console.log("getUser error occured.");
-    return null;
-  }
-  console.log("Found user:", user.name);
-  return user;
-});
-
-const saveUser = async (User) => {
-  try {
-    const user = {
-      id: User.id,
-      name: User.name || "fallback",
-      avatar: User.avatar.large || "fallback",
-      anime_count: User.statistics.anime.count || 0,
-      anime_minutesWatched: User.statistics.anime.minutesWatched || 0,
-      genres: User.statistics.anime.genres || [
-        { count: 1, genre: "a" },
-        { count: 1, genre: "b" },
-        { count: 1, genre: "c" },
-        { count: 1, genre: "d" },
-        { count: 1, genre: "e" },
-      ],
-    };
-
-    const returnUser = await prisma.pageUser.create({
-      data: {
-        id: user.id,
-        name: user.name,
-        avatar: user.avatar,
-        anime_count: user.anime_count,
-        anime_minutesWatched: user.anime_minutesWatched,
-        genres: {
-          create: user.genres.map((genre) => ({
-            genre: genre.genre,
-            count: genre.count,
-          })),
-        },
-      },
-      include: {
-        genres: true,
-      },
-    });
-
-    console.log("Saved user.");
-    return returnUser;
-  } catch (e) {
-    console.error("saveUser error occurred:");
-    return null;
-  }
-};
-
-const deleteUser = async (name) => {
-  try {
-    const deletedCount = await prisma.pageUser.deleteMany({
-      where: {
-        name: {
-          equals: name,
-          mode: "insensitive",
-        },
-      },
-    });
-
-    if (deletedCount.count > 0) {
-      console.log(`Deleted user: ${name}`);
-    } else {
-      console.log("User not found or already deleted.");
-    }
-  } catch (e) {
-    console.error("Deleting error occurred");
-  }
-};
 
 const createAniListUsers = async () => {
-  console.log("cteayeAnilsitUsers");
+  console.log("createAniListUsers");
+
   const aniListQuery = async (page, perPage) => {
     const endpoint = "https://graphql.anilist.co";
     const query = gql`
       query ($page: Int, $perPage: Int) {
-        # Define which variables will be used in the query (id)
         Page(page: $page, perPage: $perPage) {
           pageInfo {
             total
@@ -122,6 +37,10 @@ const createAniListUsers = async () => {
         }
       }
     `;
+
+    // Introduce a delay between API requests to handle rate limiting
+    await new Promise((resolve) => setTimeout(resolve, 1200)); // Adjust the delay as needed
+
     try {
       const response = await request(endpoint, query, {
         page: page,
@@ -141,15 +60,15 @@ const createAniListUsers = async () => {
     const response = await aniListQuery(page, perPage);
 
     if (!response) {
-      console.log("Ei responsee");
+      console.log("No response");
     }
 
     if (
       !response.Page.pageInfo.hasNextPage ||
-      response.Page.pageInfo.currentPage == 10
+      response.Page.pageInfo.currentPage == 300
     ) {
       console.log(
-        "vika:",
+        "End of pages:",
         response.Page.pageInfo.currentPage,
         response.Page.pageInfo.hasNextPage
       );
@@ -157,17 +76,8 @@ const createAniListUsers = async () => {
     }
 
     response.Page.users.forEach(async (user) => {
-      console.log("for lööp");
+      console.log("Processing user:", user.name);
       try {
-        /*
-        const creatableUser = {
-          name: user.name || "default",
-          updatedAt: new Date(user.updatedAt * 1000) || new Date(),
-          anime_minutesWatched: user.statistics.anime.minutesWatched || 0,
-          standardDeviation: user.statistics.anime.standardDeviation || 0,
-        };
-        */
-
         const createdUser = await prisma.user.create({
           data: {
             name: user.name,
@@ -197,20 +107,20 @@ const createAniListUsers = async () => {
           },
         });
 
-        /*
-
-        const createdUser = await prisma.user.create({
-          data: creatableUser,
-        });
-        */
-
-        console.log("Created user: ", createdUser);
+        console.log("Created user:", createdUser);
       } catch (e) {
-        console.log("createAnilistUsers | Failed to createUser:", e);
+        console.log("Failed to createUser:", e);
       }
     });
   }
+
+  // Disconnect from the database after processing
+  await prisma.$disconnect();
 };
+
+// Invoke the function
+createAniListUsers();
+
 
 const getUsers = async ({ page = 1, pageSize = 50 }) => {
   const offset = (page - 1) * pageSize;
@@ -241,7 +151,9 @@ const getUsers = async ({ page = 1, pageSize = 50 }) => {
     },
   });
 
+  await prisma.$disconnect();
+
   return users;
 };
 
-export { getUser, saveUser, deleteUser, createAniListUsers, getUsers };
+export { createAniListUsers, getUsers };

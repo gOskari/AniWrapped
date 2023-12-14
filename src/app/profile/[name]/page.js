@@ -11,13 +11,18 @@ import FetchHook from "./FetchHook.js";
 import CompareButton from "./CompareButton.js";
 import CompareStats from "./CompareStats.js";
 
-import ErrorBoundary from "../../ErrorBoundary.js"
+import ErrorBoundary from "../../ErrorBoundary.js";
+
+import { useState } from "react";
 
 export default function Page({ params }) {
   const name = params.name;
 
   const searchParams = useSearchParams();
   const view = searchParams.get("view");
+
+  const [id2, setId2] = useState(""); // State to store id2
+  const [id22, setId22] = useState(""); // State to store id2
 
   if (view == "ranking") {
     return (
@@ -26,7 +31,7 @@ export default function Page({ params }) {
           <div className="w-full">
             <Nav name={name} />
           </div>
-          <div className="flex items-center justify-center bg-primary-color p-8 rounded-xl">
+          <div className="w-full items-center justify-center">
             <FetchHook name={name} />
           </div>
         </div>
@@ -34,18 +39,75 @@ export default function Page({ params }) {
     );
   }
 
+  const handleId2Input = () => {
+    // Validate input if needed
+    if (id2.trim() !== "") {
+      setId22(id2);
+    }
+  };
+
   if (view == "compare") {
-    return (
-      <>
-        <div className="m-10 flex flex-col items-center gap-20">
-          <div className="w-full">
-            <Nav name={name} />
+    console.log(id22);
+    if (!id22 == "") {
+      return (
+        <>
+          <div className="m-10 flex flex-col items-center gap-20">
+            <div className="w-full">
+              <Nav name={name} />
+            </div>
+            <div className="rounded-xl p-8">
+              <CompareStats name1={name} name2={id22} />
+            </div>
           </div>
-          <div className="bg-primary-color p-8 rounded-xl">
-            <CompareStats id1={1} id2={128119} />
+        </>
+      );
+    }
+
+    return (
+      <div className="m-10 flex flex-col items-center gap-20">
+        <div className="w-full">
+          <Nav name={name} />
+        </div>
+        <div className="flex h-96 items-center justify-center">
+          <div className="flex">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleId2Input();
+              }}
+
+              className="flex"
+            >
+              <input
+                className="block h-12 w-full rounded-l-lg border border-secondary-color bg-primary-color p-4 text-sm text-secondary-color"
+                type="text"
+                value={id2}
+                onChange={(e) => setId2(e.target.value)}
+                placeholder="Compare to"
+              />
+              <button
+                type="submit"
+                className="flex items-center justify-center rounded-r-lg bg-secondary-color px-4 py-2 text-sm font-medium text-primary-color hover:bg-secondary-color-dark focus:outline-none"
+              >
+                <svg
+                  className="h-4 w-4"
+                  aria-hidden="true"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 19l-4-4m0-7a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"
+                  />
+                </svg>
+              </button>
+            </form>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 

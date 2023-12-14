@@ -2,6 +2,7 @@ const Footer = () => {
   return (
     <div className="text-center">
       <div className="hover:text-gray-700">
+        {/*
         <a
           href="https://github.com/gOskari/AniWrapped"
           target="_blank"
@@ -9,6 +10,7 @@ const Footer = () => {
         >
           <i className="fab fa-github"></i> GitHub
         </a>
+  */}
       </div>
       <div>
         <p className="text-sm">
