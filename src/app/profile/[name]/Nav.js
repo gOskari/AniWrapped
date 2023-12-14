@@ -18,7 +18,7 @@ const Nav = ({ name }) => {
           scroll={false}
           shallow={true}
           className={`rounded-lg p-3 text-2xl text-secondary-color hover:text-secondary-color-dark  ${
-            !view ? "bg-bg-color" : ""
+            !view ? "bg-primary-color" : ""
           }`}
         >
           Profile
@@ -28,7 +28,7 @@ const Nav = ({ name }) => {
           scroll={false}
           shallow={true}
           className={`rounded-lg p-3 text-2xl text-secondary-color hover:text-secondary-color-dark ${
-            view === "ranking" ? "bg-bg-color" : ""
+            view === "ranking" ? "bg-primary-color" : ""
           }`}
         >
           Leaderboard
@@ -37,7 +37,9 @@ const Nav = ({ name }) => {
           href={`/profile/${name}?view=compare`}
           scroll={false}
           shallow={true}
-          className={`text-2xl text-secondary-color hover:text-secondary-color-dark rounded-lg p-3 ${view === "compare" ? "bg-bg-color" : ""}`}
+          className={`rounded-lg p-3 text-2xl text-secondary-color hover:text-secondary-color-dark ${
+            view === "compare" ? "bg-primary-color" : ""
+          }`}
         >
           Compare
         </Link>
