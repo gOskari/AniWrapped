@@ -20,7 +20,7 @@ export default function NameForm() {
           name="route"
           onChange={(e) => setRoute(e.target.value)}
           className="block w-full h-12 p-4 text-sm text-secondary-color border border-secondary-color rounded-l-lg bg-primary-color"
-          placeholder="Anilist Username"
+          placeholder="Anilist Username (eg. ok)"
         />
         <button
           type="submit"

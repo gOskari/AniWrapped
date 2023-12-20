@@ -8,9 +8,9 @@ export default function Home() {
         <p className='pb-20'>
       <span className='text-secondary-color-dark'>Search and compare among </span>
       <span className='text-secondary-color-dark'></span>
-      <span className='text-secondary-color-dark'> active AniList users!</span>
+      <span className='text-secondary-color-dark'>AniList users!</span>
       </p>
-      <NameForm />
-    </main>
+      <div className='pb-5'><NameForm/></div>
+      </main>
   )
 }
