@@ -85,8 +85,10 @@ const query = gql`
 
 ## Codebase Overview
 
-#### 'app/' Contains all components and pages  
-- 'profile/name' Contains 
-#### 'styles/' contains custom styles for our TailwindCSS setup
+#### 'app/' all components and pages  
+- 'profile/[name]' dynamic route
+#### 'styles/' custom styles and theming for our TailwindCSS setup
+#### 'lib/' universal functions
+
 
 ##
